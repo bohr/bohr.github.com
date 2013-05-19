@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>用Matlab处理Dicom图像 - My Octopress Blog</title>
+  <title>About Me - My Octopress Blog</title>
   <meta name="author" content="Your Name">
 
   
-  <meta name="description" content="最近在处理CT图像时，CT图像是对人体进行逐层扫描的，在图像有很多不需要的部分，比如肋骨部分就夹杂在里面，导致三维重建出来的图像有很多不需要的部分。很不好处理。 于是，我就想了了简单方法，对一张一张的dicom格式的图像，把里面不需要的像素点都置为黑色，这样就可以了。原打算用VC++6.0+ &hellip;">
+  <meta name="description" content=" About Me Tweet Recent Posts Ineffable Shopping Guide 介绍 Childsearch----2010腾讯校园之星作品 Ineffable Shopping Guide 结构化搜索技术介绍 利用Python来解析Pcap包 GDB学习笔记 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://bohr.github.io/blog/2010/04/14/matlab-dicom">
+  <link rel="canonical" href="http://bohr.github.io/aboutme">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
@@ -65,106 +65,31 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">用Matlab处理Dicom图像</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-14T00:00:00+00:00" pubdate data-updated="true">Apr 14<span>th</span>, 2010</time>
-        
-      </p>
+    <h1 class="entry-title">About Me</h1>
     
   </header>
+  
+  <p></p>
 
 
-<div class="entry-content"><p>最近在处理CT图像时，CT图像是对人体进行逐层扫描的，在图像有很多不需要的部分，比如肋骨部分就夹杂在里面，导致三维重建出来的图像有很多不需要的部分。很不好处理。</p>
-
-<p>于是，我就想了了简单方法，对一张一张的dicom格式的图像，把里面不需要的像素点都置为黑色，这样就可以了。原打算用VC++6.0+VTK来实现的，调试起来太麻烦了，就直接用matlab来处理就简单了。</p>
-
-<p>1。读写Dicom格式的图像
-<div>
-<pre>I=dicomread('E:CT37222.dcm');   %读取图像
-metadata = dicominfo('E:CT37222.dcm');%存储信息
-imagesc(I);%显示图像</pre></div></p>
-
-<p>dicomwrite(I, &#8216;E:CT37222.dcm&#8217;,metadata);%写入Dicom图像
-
-2.在Dicom图像上面进行选取需要的矩形区域</p>
-
-<p>这个代码实现很简单，找到这个方法也费了一些波折</p>
-
-<p>[xv,yv] = ginput(2);  %这样就可以在图像上面选取2个点，将X坐标保存到xv中，将y坐标保存到yv中。</p>
-
-<p>如果有很多点形成一个矩形区域的话，可以用  in = inpolygon(x,y,xv,yv); 来判断，x，y坐标是否在选取的点围成的区域中。</p>
-
-<p><a href="http://images.cnblogs.com/cnblogs_com/Chevalier/WindowsLiveWriter/MatlabDicom_12CC9/image_2.png"><img style="display: inline; border-width: 0px;" title="image" alt="image" src="http://yanggang.me/images/daijun/wp-content/uploads/2013/05/image_thumb.png" width="244" height="242" border="0" /></a></p>
-</div>
-
-
-  <footer>
-    <p class="meta">
+  
+    <footer>
       
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
-
       
-
-
-
-
-
-
-
-
+        <div class="sharing">
   
-
-
-<time datetime="2010-04-14T00:00:00+00:00" pubdate data-updated="true">Apr 14<span>th</span>, 2010</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/xue-xi-bi-ji/'>学习笔记</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://bohr.github.io/blog/2010/04/14/matlab-dicom/" data-via="" data-counturl="http://bohr.github.io/blog/2010/04/14/matlab-dicom/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://bohr.github.io/aboutme/index.html" data-via="" data-counturl="http://bohr.github.io/aboutme/index.html" >Tweet</a>
   
   
   
 </div>
 
-    
-    <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2010/04/04/linq/" title="Previous Post: 用LINQ来对文章列表进行操作">&laquo; 用LINQ来对文章列表进行操作</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2010/04/20/shadow-player/" title="Next Post: 震动与责任;走访民间皮影艺人">震动与责任;走访民间皮影艺人 &raquo;</a>
-      
-    </p>
-  </footer>
+    </footer>
+  
 </article>
 
 </div>

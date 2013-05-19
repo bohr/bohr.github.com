@@ -98,3 +98,8 @@ google_analytics_tracking_id:
 
 # Facebook Like
 facebook_like: false
+
+#My fav
+douban:true
+weibo:true
+category_cloud:true

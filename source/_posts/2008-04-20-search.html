@@ -1,0 +1,30 @@
+---
+layout: post
+title: 今天搜索引擎备忘
+categories:
+- 学习笔记
+tags: []
+published: true
+comments: true
+---
+<p>修改SQL语句,以前老以为数据库自动做好了优化工作,其实不然,在修改后的SQL语句,可以很快实现.</p>
+
+<p>'tSql="select ArticleUrl,Title,NewsTime,Source from mynews where ID in (select distinct urlID from UrlWord where word='"+ sKey +"');"<br />
+tSql=" select ArticleUrl,Title,NewsTime ,Source from mynews where Title like  '%" + sKey +"%' Union   All  select ArticleUrl,Title,NewsTime,Source from mynews where ID in (select distinct urlID from UrlWord where word='"+ sKey +"');"</p>
+
+<p>利用游标来增加数据到mynews表中</p>
+
+<p>declare newsie_cur cursor<br />
+for<br />
+select ArticleUrl,Title,NewsTime from  newsie</p>
+
+<p>open newsie_cur<br />
+declare @ArticleUrl nvarchar(255),@Title nvarchar(255),@NewsTime datetime<br />
+fetch next from newsie_cur into @ArticleUrl,@Title,@NewsTime<br />
+while(@@fetch_status=0)<br />
+begin<br />
+fetch next from newsie_cur into @ArticleUrl,@Title,@NewsTime<br />
+insert into mynews(ArticleUrl,Title,NewsTime,Source) values( @ArticleUrl,@Title,@NewsTime,'信息工程学院')<br />
+end</p>
+
+<p>close news_cur</p>

@@ -1,0 +1,44 @@
+---
+layout: post
+title: apache实现多个端口
+categories:
+- 编程
+tags: []
+published: true
+comments: true
+---
+<p><span style="background-color: #c7edcc; font-family: Verdana;"><span style="background-color: #c7edcc; font-family: Verdana;">Listen 80<br />
+Listen 88</span>
+#===============================================================================<br />
+&lt;VirtualHost 127.0.0.1:88&gt;<br />
+DocumentRoot "D:EmpireServerphpapache2.2htdocs"<br />
+&lt;/VirtualHost&gt;<br />
+&lt;Directory "D:EmpireServerphpapache2.2htdocs"&gt;<br />
+#
+# Possible values for the Options directive are "None", "All",<br />
+# or any combination of:<br />
+#   Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews<br />
+#
+# Note that "MultiViews" must be named *explicitly* --- "Options All"<br />
+# doesn't give it to you.<br />
+#
+# The Options directive is both complicated and important.  Please see<br />
+# http://httpd.apache.org/docs/2.2/mod/core.html#options<br />
+# for more information.<br />
+#
+Options FollowSymLinks</span></p>
+
+<p><span style="background-color: #c7edcc; font-family: Verdana;">    #<br />
+# AllowOverride controls what directives may be placed in .htaccess files.<br />
+# It can be "All", "None", or any combination of the keywords:<br />
+#   Options FileInfo AuthConfig Limit<br />
+#
+AllowOverride None</span></p>
+
+<p><span style="background-color: #c7edcc; font-family: Verdana;">    #<br />
+# Controls who can get stuff from this server.<br />
+#
+Order allow,deny<br />
+Allow from all</span></p>
+
+<p><span style="background-color: #c7edcc; font-family: Verdana;">&lt;/Directory&gt;</span></p>

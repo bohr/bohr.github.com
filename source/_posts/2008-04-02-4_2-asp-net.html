@@ -1,0 +1,38 @@
+---
+layout: post
+title: 4_2 asp.net初级(一)
+categories:
+- 学习笔记
+tags: []
+published: true
+comments: true
+---
+<p>protected void ImageButton1_Click(object sender, ImageClickEventArgs e)<br />
+第一个参数是名叫sender的object参数，表示引发事件的控件，表示点击的那个按钮<br />
+第二个参数是名叫e的EventArgs用于表示附加的事件关联的事件信息。只要第二个参数不是默认的EventArgs</p>
+
+<p>参数，就可以知道一定有附加的事件信息传给了处理程序。</p>
+
+<p>Page类包含IsPostBack属性，该属性用于检测页面是否已经回传给服务器端。<br />
+==========admin文件夹/web.config=======================<br />
+&lt;?xml version="1.0" encoding="utf-8"?&gt;<br />
+&lt;configuration xmlns="<a href="http://schemas.microsoft.com/.NetConfiguration/v2.0">http://schemas.microsoft.com/.NetConfiguration/v2.0"</a>&gt;<br />
+&lt;system.web&gt;<br />
+&lt;authorization&gt;<br />
+&lt;deny users="?" /&gt;<br />
+&lt;/authorization&gt;<br />
+&lt;/system.web&gt;<br />
+&lt;/configuration&gt;<br />
+===========================================<br />
+首页web.config</p>
+
+<p>&lt;authentication mode="Forms"&gt;<br />
+&lt;forms name="AdminCookie" loginUrl="Default2.aspx" /&gt;<br />
+&lt;/authentication&gt;</p>
+
+<p>============================Default2.aspx=================<br />
+验证成功后<br />
+System.Web.Security.FormsAuthentication.SetAuthCookie(username.Text.ToString(), false);</p>
+
+<p>====================================安全退出====<br />
+System.Web.Security.FormsAuthentication.SignOut();</p>

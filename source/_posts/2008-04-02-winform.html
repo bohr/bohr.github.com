@@ -1,0 +1,16 @@
+---
+layout: post
+title: winform程序中如何在点击重启按钮后注销本程序所有的资源并且重新加载窗口？
+categories:
+- 编程
+tags: []
+published: true
+comments: true
+---
+<p>winform<strong>程序</strong>中如何在点击<strong>重</strong>启按钮后注销本<strong>程序</strong>所有的资源并且重新加载窗口？</p>
+
+<p>Process   newprocess   =new   Process();<br />
+newprocess.StartInfo.FileName="<strong>程序</strong>名字";<br />
+newprocess.Start();<br />
+Application.Exit();<br />
+其中   "<strong>程序</strong>名字"   使用您的主输出文件的名字，如：   test.exe   即可</p>

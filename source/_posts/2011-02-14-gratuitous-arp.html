@@ -1,0 +1,12 @@
+---
+layout: post
+title: Gratuitous ARP
+categories:
+- 学习笔记
+tags:
+- ARP
+- 学习笔记
+published: true
+comments: true
+---
+<p><p>以太网中为什么要用到Gratuitous ARP（以下简称GARP）呢？</p>  <p>第一，主机可以通过GARP向网络发送广播，以告诉整个广播域，目前某个IP所对应的MAC地址是什么——这一行为就像是在发宣传单，而宣传单是不需要回应的。</p>  <p>第二，主机是想看看广播域内有没有别的主机使用自己的IP地址，如果使用了，则在界面上弹出“IP冲突”字样。普通ARP请求报文广播发送出去，广播域内所有主机都会接收到，计算机系统判断ARP请求报文中的目的IP地址字段，如果发现和本机的IP地址相同，则将自己的MAC 地址填写到该报文的目的MAC地址字段，并将该报文发回给源主机。所以只要发送ARP请求的主机接收到报文，则证明广播域内有别的主机使用和自己相同的 IP地址（这里不考虑路由器的ARP代理问题）。免费ARP的报文发出去是不希望收到回应的，只希望是起宣告作用；如果收到回应，则证明对方也使用自己目前使用的IP地址，</p>  <h3></h3>  <p><strong>Gratuitous ARP</strong> could mean both gratuitous ARP <em>request</em> or gratuitous ARP <em>reply</em>. Gratuitous in this case means a request/reply that is not normally needed according to the ARP specification (RFC 826) but could be used in some cases. A gratuitous ARP request is an <a href="http://wiki.wireshark.org/AddressResolutionProtocol">AddressResolutionProtocol</a> request packet where the source and destination IP are both set to the IP of the machine issuing the packet and the destination MAC is the broadcast address <tt>ff:ff:ff:ff:ff:ff</tt>. Ordinarily, no reply packet will occur. A gratuitous ARP reply is a reply to which no request has been made.</p></p>

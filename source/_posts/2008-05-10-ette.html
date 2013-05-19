@@ -1,0 +1,107 @@
+---
+layout: post
+title: 递归下降分析程序构造
+categories:
+- 编程
+tags: []
+published: true
+comments: true
+---
+<p><div style="padding-right: 5px; padding-left: 4px; font-size: 13px; padding-bottom: 4px; width: 98%; word-break: break-all; padding-top: 4px; background-color: #eeeeee; border: #cccccc 1px solid;"><span style="color: #000000;">#include </span><span style="color: #000000;">&lt;</span><span style="color: #000000;">iostream</span><span style="color: #000000;">&gt;</span><span style="color: #000000;">
+</span><span style="color: #0000ff;">using</span><span style="color: #000000;"> </span><span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+</span><span style="color: #0000ff;">char</span><span style="color: #000000;"> A[</span><span style="color: #800080;">100</span><span style="color: #000000;">];    </span><span style="color: #008000;">//</span><span style="color: #008000;">用于存放符号串</span><span style="color: #008000;">
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> i</span><span style="color: #000000;">=</span><span style="color: #800080;">0</span><span style="color: #000000;">;        </span><span style="color: #008000;">//</span><span style="color: #008000;">扫描指针</span><span style="color: #008000;">
+</span><span style="color: #0000ff;">char</span><span style="color: #000000;"> sym;        </span><span style="color: #008000;">//</span><span style="color: #008000;">用于保存当前要判断的字符</span><span style="color: #008000;">
+</span><span style="color: #0000ff;">bool</span><span style="color: #000000;"> flag</span><span style="color: #000000;">=</span><span style="color: #800080;">0</span><span style="color: #000000;">;    </span><span style="color: #008000;">//</span><span style="color: #008000;">用于判断该输入是否匹配</span><span style="color: #008000;">
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> E();   </span><span style="color: #008000;">//</span><span style="color: #008000;"> E</span><span style="color: #008000;">
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> EE();  </span><span style="color: #008000;">//</span><span style="color: #008000;"> E'</span><span style="color: #008000;">
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> T();   </span><span style="color: #008000;">//</span><span style="color: #008000;"> T</span><span style="color: #008000;">
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> TT();  </span><span style="color: #008000;">//</span><span style="color: #008000;"> T'</span><span style="color: #008000;">
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> F();   </span><span style="color: #008000;">//</span><span style="color: #008000;"> F</span><span style="color: #008000;">
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> advance();        </span><span style="color: #008000;">//</span><span style="color: #008000;">从字符串数组中读入一个字符</span><span style="color: #008000;">
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> main( )<br />
+{
+cout</span><span style="color: #000000;">&lt;&lt;</span><span style="color: #800000;">"</span><span style="color: #800000;">n多读入的结束字符为#nn</span><span style="color: #800000;">"</span><span style="color: #000000;">;<br />
+cin</span><span style="color: #000000;">&gt;&gt;</span><span style="color: #000000;">A;<br />
+cout</span><span style="color: #000000;">&lt;&lt;</span><span style="color: #800000;">"</span><span style="color: #800000;">n***************************************nn</span><span style="color: #800000;">"</span><span style="color: #000000;">;<br />
+sym</span><span style="color: #000000;">=</span><span style="color: #000000;">A[</span><span style="color: #800080;">0</span><span style="color: #000000;">];<br />
+E();
+</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(sym</span><span style="color: #000000;">!=</span><span style="color: #800000;">'</span><span style="color: #800000;">#</span><span style="color: #800000;">'</span><span style="color: #000000;">){
+</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(flag</span><span style="color: #000000;">==</span><span style="color: #800080;">1</span><span style="color: #000000;">)<br />
+{
+cout</span><span style="color: #000000;">&lt;&lt;</span><span style="color: #800000;">"</span><span style="color: #800000;">n该输入串不匹配nn</span><span style="color: #800000;">"</span><span style="color: #000000;">;<br />
+}
+</span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+{<br />
+cout</span><span style="color: #000000;">&lt;&lt;</span><span style="color: #800000;">"</span><span style="color: #800000;">n该输入串匹配nn</span><span style="color: #800000;">"</span><span style="color: #000000;">;<br />
+}
+}<br />
+}
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> E()<br />
+{
+T();<br />
+EE();<br />
+}
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> EE()<br />
+{
+</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(sym</span><span style="color: #000000;">==</span><span style="color: #800000;">'</span><span style="color: #800000;">+</span><span style="color: #800000;">'</span><span style="color: #000000;">)<br />
+{
+advance();<br />
+T();<br />
+EE();<br />
+}</span></div></p>
+
+<p>}
+<span style="color: #0000ff;">void</span><span style="color: #000000;"> T()<br />
+{
+F();<br />
+TT();<br />
+}
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> TT()<br />
+{
+</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(sym</span><span style="color: #000000;">==</span><span style="color: #800000;">'</span><span style="color: #800000;">*</span><span style="color: #800000;">'</span><span style="color: #000000;">)<br />
+{
+advance();<br />
+F();<br />
+TT();<br />
+}</span></p>
+
+<p>}
+<span style="color: #0000ff;">void</span><span style="color: #000000;"> F()<br />
+{
+</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(sym</span><span style="color: #000000;">==</span><span style="color: #800000;">'</span><span style="color: #800000;">i</span><span style="color: #800000;">'</span><span style="color: #000000;">)<br />
+advance();
+</span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+{
+</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(sym</span><span style="color: #000000;">==</span><span style="color: #800000;">'</span><span style="color: #800000;">(</span><span style="color: #800000;">'</span><span style="color: #000000;">)<br />
+{
+advance();<br />
+E();
+</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(sym</span><span style="color: #000000;">==</span><span style="color: #800000;">'</span><span style="color: #800000;">)</span><span style="color: #800000;">'</span><span style="color: #000000;">)<br />
+advance();
+</span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+flag</span><span style="color: #000000;">=</span><span style="color: #800080;">1</span><span style="color: #000000;">;<br />
+}
+</span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+flag</span><span style="color: #000000;">=</span><span style="color: #800080;">1</span><span style="color: #000000;">;<br />
+}</span></p>
+
+<p>}
+<span style="color: #0000ff;">void</span><span style="color: #000000;"> advance()<br />
+{
+i</span><span style="color: #000000;">++</span><span style="color: #000000;">;<br />
+sym</span><span style="color: #000000;">=</span><span style="color: #000000;">A[i];
+</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(sym</span><span style="color: #000000;">==</span><span style="color: #800000;">'</span><span style="color: #800000;">#</span><span style="color: #800000;">'</span><span style="color: #000000;">)<br />
+{
+</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(flag</span><span style="color: #000000;">==</span><span style="color: #800080;">1</span><span style="color: #000000;">)<br />
+{
+cout</span><span style="color: #000000;">&lt;&lt;</span><span style="color: #800000;">"</span><span style="color: #800000;">n该输入串不匹配nn</span><span style="color: #800000;">"</span><span style="color: #000000;">;<br />
+}
+</span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+{<br />
+cout</span><span style="color: #000000;">&lt;&lt;</span><span style="color: #800000;">"</span><span style="color: #800000;">n该输入串匹配nn</span><span style="color: #800000;">"</span><span style="color: #000000;">;<br />
+}
+}</span></p>
+
+<p>}
+</p>

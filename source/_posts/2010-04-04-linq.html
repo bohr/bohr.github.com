@@ -1,0 +1,35 @@
+---
+layout: post
+title: 用LINQ来对文章列表进行操作
+categories:
+- 编程
+tags:
+- C#
+- LINQ
+- 论坛助手
+published: true
+comments: true
+---
+<p>最近正在做的一个软件，就是对某个网站的所有文章列表里添加一个监听器，判断是否有指定的关键字。对文章列表里面的抓取都已经做好了，就需要对一前一后的两个列表进行更新。本来可以用循环列表一个一个的进行判别的，一想在VS2008里面不是有个LINQ啊，一直只是听说过，从来没用过。今天试看看怎么用。就上网搜了会，照着别人的写了个。感觉效率不好，应该可以写成一个语句了，我去写成了三个，也不知道怎么改好。</p>
+
+<p>&nbsp;
+<pre class="brush:csharp"> public bool getState(ref List&lt;Post&gt; ls)
+      {
+          second = getData();
+          var list2 = from s in first
+                      where s.Title.IndexOf( key ) &gt;= 0
+                      select s.getPostUid();
+          first[4].getPostUid();
+          var list3 = second.Where(s =&gt; s.Title.IndexOf( key) &gt;= 0);
+          var l =from s in list3
+              where !list2.Contains(s.getPostUid())
+               select s;
+          first = second;
+          if (l.Count() &gt;= 1)
+          {
+              ls = l.ToList();
+              return true;
+          }
+          else
+              return false;
+      }</pre></p>

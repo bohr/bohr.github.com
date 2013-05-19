@@ -1,0 +1,167 @@
+---
+layout: post
+title: 利用Python来解析Pcap包
+categories:
+- 编程
+tags:
+- IP层
+- pcap
+- Python
+- tcpdump
+published: true
+comments: true
+---
+<p>Tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。</p>
+
+<p><a href="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/3.png"><img class="alignnone size-full wp-image-7061" alt="3" src="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/3.png" width="620" height="279" /></a></p>
+
+<p>这个我在截取的一段Tcpdump的数据包。通常可以采用wireshark来对Tcpdump数据包进行分析。</p>
+
+<p><a href="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/1.png"><img class="alignnone size-full wp-image-7059" alt="1" src="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/1.png" width="640" height="263" /></a></p>
+
+<p><a href="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/3.png"><img class="alignnone size-full wp-image-7061" alt="3" src="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/3.png" width="620" height="279" /></a></p>
+
+<p>从图中大概可以看出每一个tcpdump的数据里面有很多的包，每一个包都有包的head部分和Data部分。其中head部分包括网卡的地址，ip的地址，端口地址，发送时间等等很多信息。在我的工作中需要将包的发送时间、它的目的IP以及发送的数据保存起来。这就需要对tcpdump数据进行分析，提取出有用的信息。</p>
+
+<p>在网上有一个C#版本做的解析Pcap数据包的资料，很有参考价值。<a href="http://www.cnblogs.com/zealic/archive/2008/05/04/1182420.html">读写 cap 文件的 C# 代码（兼容 tcpdump 及 Wireshark）</a></p>
+
+<p>它的关键代码
+<pre class="code"><span style="color: blue;">#region </span>Constructors
+      <span style="color: gray;">/// &lt;summary&gt;
+      /// </span><span style="color: green;">构造一个 Pcap 包捕获读取器。
+      </span><span style="color: gray;">/// &lt;/summary&gt;
+      /// &lt;param name="baseStream"&gt;</span><span style="color: green;">要读取的基础流</span><span style="color: gray;">&lt;/param&gt;
+      </span><span style="color: blue;">public </span>PacketCaptureReader(<span style="color: teal;">Stream </span>baseStream)
+      {
+          <span style="color: blue;">if </span>(baseStream == <span style="color: blue;">null</span>)</pre>
+<pre class="code"><span style="color: blue;">throw new </span><span style="color: teal;">ArgumentNullException</span>(<span style="color: maroon;">"baseStream"</span>);
+          <span style="color: blue;">if </span>(!baseStream.CanRead)</pre>
+<pre class="code"><span style="color: blue;">throw new </span><span style="color: teal;">ArgumentException</span>(<span style="color: maroon;">"传入的流必须为可读。"</span>, <span style="color: maroon;">"baseStream"</span>);
+          _BaseStream = baseStream;
+          m_Reader = <span style="color: blue;">new </span><span style="color: teal;">BinaryReader</span>(_BaseStream);
+          <span style="color: blue;">if </span>(m_Reader.ReadUInt32() != MAGIC)
+              <span style="color: blue;">throw new </span><span style="color: teal;">FormatException</span>(<span style="color: maroon;">"无效的 PCAP 格式。"</span>);
+          <span style="color: blue;">short </span>versionMajor = m_Reader.ReadInt16();
+          <span style="color: blue;">short </span>versionMinjor = m_Reader.ReadInt16();
+          <span style="color: blue;">if </span>(versionMajor != 2 || VersionMinjor != 4)
+          {
+              <span style="color: blue;">throw new </span><span style="color: teal;">FormatException</span>(</pre>
+<blockquote>
+<pre class="code"><span style="color: blue;">string</span>.Format(<span style="color: maroon;">"无法处理的 PCAP 版本 {0}.{1}"</span>, versionMajor, versionMinjor));
+          }
+          _TimeZone = m_Reader.ReadInt32();
+          _CaptureTimestamp = m_Reader.ReadInt32();
+          _MaxPacketLength = m_Reader.ReadInt32();
+          _LinkLayerType = (<span style="color: teal;">LinkLayerType</span>)m_Reader.ReadInt32();
+      }</pre></blockquote></p>
+
+<p>      <span style="color: blue;">#endregion</span></p>
+
+<p>      <span style="color: gray;">/// &lt;summary&gt;<br />
+      /// </span><span style="color: green;">读取下一个捕获包<br />
+      </span><span style="color: gray;">/// &lt;/summary&gt;<br />
+      /// &lt;returns&gt;</span><span style="color: green;">读取的捕获包，如果已经到达尾端，返回 null</span><span style="color: gray;">&lt;/returns&gt;<br />
+      </span><span style="color: blue;">public </span><span style="color: teal;">PacketCapture </span>Read()<br />
+      {<br />
+          <span style="color: blue;">if </span>(_BaseStream.Position == _BaseStream.Length) <span style="color: blue;">return null</span>;<br />
+          <span style="color: teal;">UnixTime </span>timestamp = <span style="color: blue;">new </span><span style="color: teal;">UnixTime</span>(m_Reader.ReadInt32());<br />
+          <span style="color: blue;">int </span>millseconds = m_Reader.ReadInt32();<br />
+          <span style="color: blue;">if </span>(millseconds &gt; 1000000)<br />
+              <span style="color: blue;">throw new </span><span style="color: teal;">InvalidDataException</span>(<span style="color: maroon;">"读取到无效的数据格式。"</span>);<br />
+          <span style="color: blue;">int </span>len = m_Reader.ReadInt32();<br />
+          <span style="color: blue;">int </span>rawLen = m_Reader.ReadInt32();<br />
+          <span style="color: blue;">if </span>(len &gt; rawLen)<br />
+              <span style="color: blue;">throw new </span><span style="color: teal;">InvalidDataException</span>(<span style="color: maroon;">"读取到无效的数据格式。"</span>);<br />
+          <span style="color: blue;">byte</span>[] buff = m_Reader.ReadBytes(len);<br />
+          <span style="color: blue;">return new </span><span style="color: teal;">PacketCapture</span>(buff, rawLen, timestamp, millseconds);<br />
+      }
+
+从中可以看出 每一个tcpdump数据里面都有一个数据格式的head信息，通过读取该部分判断这个数据包的格式。剩下的部分就是我需要的数据包内容了。</p>
+
+<p>我的python代码如下
+<div id="codeSnippetWrapper" style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 20px 0px 10px; width: 97.5%; font-family: 'Courier New', courier, monospace; direction: ltr; max-height: 200px; font-size: 8pt; overflow: auto; cursor: text; border: silver 1px solid; padding: 4px;">
+<div id="codeSnippet" style="text-align: left; line-height: 12pt; background-color: #f4f4f4; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;">
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum1" style="color: #606060;">   1:</span> <span style="color: #008000;">#!/usr/bin/python2.5</span></pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum2" style="color: #606060;">   2:</span> <span style="color: #008000;"># -*- coding: utf-8 -*-#</span></pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum3" style="color: #606060;">   3:</span> import struct</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum4" style="color: #606060;">   4:</span> import os</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum5" style="color: #606060;">   5:</span> import re</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum6" style="color: #606060;">   6:</span> import sys</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum7" style="color: #606060;">   7:</span> import time</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum8" style="color: #606060;">   8:</span> import socket</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum9" style="color: #606060;">   9:</span> def Pcap_check(infile):</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum10" style="color: #606060;">  10:</span>     c = infile.read(24)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum11" style="color: #606060;">  11:</span>     <span style="color: #0000ff;">if</span> not c:</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum12" style="color: #606060;">  12:</span>         <span style="color: #0000ff;">return</span> c</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum13" style="color: #606060;">  13:</span>     (a,b,cx,d,e,f,g)=struct.unpack(<span style="color: #006080;">'&lt;Ihhiiii'</span>,c)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum14" style="color: #606060;">  14:</span>     <span style="color: #0000ff;">if</span> a!= 0xA1B2C3D4:</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum15" style="color: #606060;">  15:</span>         <span style="color: #0000ff;">return</span> False</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum16" style="color: #606060;">  16:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"versionMajor:"</span>,b</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum17" style="color: #606060;">  17:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"VersionMinjor:"</span>,cx</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum18" style="color: #606060;">  18:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"_TimeZone:"</span>,d</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum19" style="color: #606060;">  19:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"_CaptureTimestamp"</span>,e</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum20" style="color: #606060;">  20:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"_MaxPacketLength:"</span>,f</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum21" style="color: #606060;">  21:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"_LinkLayerType:"</span>,g</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum22" style="color: #606060;">  22:</span>     <span style="color: #0000ff;">return</span> True</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum23" style="color: #606060;">  23:</span> def Pcap_read(infile):</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum24" style="color: #606060;">  24:</span>     c = infile.read(16)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum25" style="color: #606060;">  25:</span>     <span style="color: #0000ff;">if</span> not c:</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum26" style="color: #606060;">  26:</span>         <span style="color: #0000ff;">return</span> (<span style="color: #006080;">''</span>,0,c)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum27" style="color: #606060;">  27:</span>     (timestamp,millseconds,len,rawlen)=struct.unpack(<span style="color: #006080;">'&lt;IIII'</span>,c)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum28" style="color: #606060;">  28:</span>     timeStruct=time.gmtime(timestamp)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum29" style="color: #606060;">  29:</span>     currentTime=(timeStruct.tm_hour*3600+timeStruct.tm_min*60+</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum30" style="color: #606060;">  30:</span>                 timeStruct.tm_sec)*1000+millseconds/1000</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum31" style="color: #606060;">  31:</span>     c=infile.read(34)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum32" style="color: #606060;">  32:</span>     source,dest=struct.unpack(<span style="color: #006080;">'&lt;26xII'</span>,c)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum33" style="color: #606060;">  33:</span>     source=socket.inet_ntoa(c[26:30])</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum34" style="color: #606060;">  34:</span>     dest=socket.inet_ntoa(c[30:])</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum35" style="color: #606060;">  35:</span>     infile.read(8)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum36" style="color: #606060;">  36:</span>     c=infile.read(len-8-34)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum37" style="color: #606060;">  37:</span>     <span style="color: #0000ff;">return</span> (dest,currentTime,c)</pre>
+<!--CRLF--></div></div></p>
+
+<p>
+
+参考资料：<a href="http://www.cnblogs.com/zealic/archive/2008/05/04/1182420.html">读写 cap 文件的 C# 代码（兼容 tcpdump 及 Wireshark）</a><a title="http://www.cnblogs.com/zealic/archive/2008/05/04/1182420.html" href="http://www.cnblogs.com/zealic/archive/2008/05/04/1182420.html">http://www.cnblogs.com/zealic/archive/2008/05/04/1182420.html</a></p>
+
+<p>tcpdump+python编写的流量监控的脚本 <a title="http://blog.csdn.net/kobeyan/archive/2009/07/13/4344192.aspx" href="http://blog.csdn.net/kobeyan/archive/2009/07/13/4344192.aspx">http://blog.csdn.net/kobeyan/archive/2009/07/13/4344192.aspx</a></p>
+
+<p>dpkt下载地址：<a href="http://code.google.com/p/dpkt/downloads/list">http://code.google.com/p/dpkt/downloads/list</a></p>
+
+<p>pcap下载地址：<a title="http://code.google.com/p/pypcap/" href="http://code.google.com/p/pypcap/">http://code.google.com/p/pypcap/</a></p>

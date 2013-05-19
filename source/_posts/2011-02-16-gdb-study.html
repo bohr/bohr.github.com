@@ -1,0 +1,153 @@
+---
+layout: post
+title: GDB学习笔记
+categories:
+- 学习笔记
+tags:
+- GDB
+- Linux
+- 笔记
+published: true
+comments: true
+---
+<p><h4>一些参考网页：
+<a href="http://blog.ksplice.com/2011/01/8-gdb-tricks/" target="_blank">8 gdb tricks you should know</a>
+<a href="http://wangcong.org/articles/learning-gdb.cn.html" target="_blank">学习使用 GNU GDB Debugger</a>
+<a href="http://coolshell.cn/articles/3643.html" target="_blank">GDB中应该知道的几个调试方法</a></h4>
+<strong>用GDB调试程序系列：</strong>  <a title="http://blog.csdn.net/haoel/archive/2003/07/02/2879.aspx" href="http://blog.csdn.net/haoel/archive/2003/07/02/2879.aspx">http://blog.csdn.net/haoel/archive/2003/07/02/2879.aspx</a></p>
+
+<p>Two more very useful tricks:</p>
+
+<p>1. Setting hardware breakpoints on data does not slow program execution and stops when the specific variable is modified. Sometimes gdb automatically sets HW breakpoint when you say watch . Sometimes you have to force it by using something like:</p>
+
+<p>set x = &amp;<br />
+watch *$x</p>
+
+<p>2. You can set an “ignore count” on any breakpoint using “ignore “. GDB will stop after the breakpoint was hit that many times. The standard way to use this is to set the ignore count very high (say, 9999), run the program till it crashes or otherwise stops after an interesting event, and then use “info bp ” to determine how many times the breakpoint was hit. Then set the ignore count to that number -1 and rerun. The debugger will stop just before the interesting event.
+<h4>GDB Essential commands</h4>
+The command set of GDB really is quite concise and intuitive,<br />
+so learn it now so you don't have to when things are going pear shaped!
+<table class="pixelbeat">
+<tbody>
+<tr class="pbtitle">
+<td><b>Command</b></td>
+<td><b>Abbrev</b></td>
+<td><b>Description</b></td>
+</tr>
+<tr>
+<td>set args</td>
+<td></td>
+<td>set command args. Also can do: gdb --args command arg1 ...</td>
+</tr>
+<tr>
+<td>break</td>
+<td>b</td>
+<td>set breakpoint (at function, line number, ...)</td>
+</tr>
+<tr>
+<td>disable</td>
+<td>dis</td>
+<td>disable breakpoints (all by default)</td>
+</tr>
+<tr>
+<td>enable</td>
+<td>en</td>
+<td>enable breakpoints (all by default)</td>
+</tr>
+<tr>
+<td>run</td>
+<td>r</td>
+<td>(re)start execution</td>
+</tr>
+<tr>
+<td>continue</td>
+<td>c</td>
+<td>continue execution</td>
+</tr>
+<tr>
+<td>step</td>
+<td>s</td>
+<td>next line</td>
+</tr>
+<tr>
+<td>next</td>
+<td>n</td>
+<td>next line without recursing into functions</td>
+</tr>
+<tr>
+<td>finish</td>
+<td>fin</td>
+<td>next line after this function returns</td>
+</tr>
+<tr>
+<td>until &lt;line&gt;</td>
+<td></td>
+<td>continue execution until line number</td>
+</tr>
+<tr>
+<td>list</td>
+<td>l</td>
+<td>show source (for line, function, offset, ...)</td>
+</tr>
+<tr>
+<td>backtrace</td>
+<td>bt</td>
+<td>show the stack of functions. Add "full" to include local variables</td>
+</tr>
+<tr>
+<td>thread apply all bt</td>
+<td>t a a bt</td>
+<td>show the stack of functions in all threads</td>
+</tr>
+<tr>
+<td>print var</td>
+<td>p</td>
+<td>display a variable. Use p/x for hex</td>
+</tr>
+<tr>
+<td>x/16xb &lt;addr&gt;</td>
+<td></td>
+<td>hexdump 16 bytes at address</td>
+</tr>
+<tr>
+<td>watch</td>
+<td>wa</td>
+<td>break when variable changes value</td>
+</tr>
+<tr>
+<td>display</td>
+<td>disp</td>
+<td>display expression each time program stops</td>
+</tr>
+<tr>
+<td>info locals</td>
+<td>inf loc</td>
+<td>display local variables</td>
+</tr>
+<tr>
+<td>help ...</td>
+<td>h</td>
+<td>display online help</td>
+</tr>
+<tr>
+<td>focus next</td>
+<td>fs n</td>
+<td>switch window (allows cursor keys in CMD window for e.g.)</td>
+</tr>
+<tr>
+<td>[Ctrl-x a]</td>
+<td></td>
+<td>toggle the text windowing interface</td>
+</tr>
+<tr>
+<td>[Ctrl-L]</td>
+<td></td>
+<td>redraw the display (if program outputs for example)</td>
+</tr>
+<tr>
+<td>[Return]</td>
+<td></td>
+<td>repeat the last command</td>
+</tr>
+</tbody>
+</table></p>

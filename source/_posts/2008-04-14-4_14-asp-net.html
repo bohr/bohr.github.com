@@ -1,0 +1,74 @@
+---
+layout: post
+title: 4_14 ASP.NET学习总结
+categories:
+- 学习笔记
+tags: []
+published: true
+comments: true
+---
+<p>SqlDataSource控件的使用方法及练习</p>
+
+<p>1.Web Config存储连接字符串的方法</p>
+
+<p>主要代码:</p>
+
+<p>在web.config中</p>
+
+<p>&lt;connectionStrings&gt;<br />
+&lt;!--链接SQL Server数据库的链接字符串--&gt;<br />
+&lt;add name="SQLCONNECTIONSTRING" connectionString="data Source=127.0.0.1;database=ShareWeb;user id=sa;pwd=dai" providerName="System.Data.SqlClient"&gt;&lt;/add&gt;<br />
+&lt;/connectionStrings&gt;</p>
+
+<p>在页面中default.aspx
+<blockquote>&lt;asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="&lt;%$ ConnectionStrings:SQLCONNECTIONSTRING %&gt;"<br />
+SelectCommand="Select [DepartmentID], [DepartmentName] FROM [Department]"&gt;<br />
+&lt;/asp:SqlDataSource&gt;</blockquote>
+在程序中调用这个连接字符串</p>
+
+<p>//读取web.config文件<br />
+connStr = WebConfigurationManager.ConnectionStrings["SQLCONNECTIONSTRING"].ConnectionString;</p>
+
+<p>//打开数据库连接<br />
+conn = new SqlConnection(connStr);<br />
+conn.Open();</p>
+
+<p>2.简单sql语句进行的数据绑定.</p>
+
+<p>练习1.利用DatailsView与SqldataSource实现[编辑][删除]等.不编写代码.直接用控件拖动.</p>
+
+<p>样本:<a title="http://www.coolsdu.cn/4_14_test/Default2.aspx" href="http://www.coolsdu.cn/4_14_test/Default2.aspx">http://www.coolsdu.cn/4_14_test/Default2.aspx</a></p>
+
+<p>练习2.在Sqldatasource中使用Parameter类来表示一个任意的参数值.ControlParameter表示控件值或页面属性值.</p>
+
+<p>制作一个简易的留言板,可以显示IP和日期.参考示例:<a title="http://www.coolsdu.cn/4_14_test/Default3.aspx" href="http://www.coolsdu.cn/4_14_test/Default3.aspx">http://www.coolsdu.cn/4_14_test/Default3.aspx</a></p>
+
+<p>关键代码:</p>
+
+<p>在default3.aspx中<br />
+InsertCommand="Insert INTO [lyb] (  [Content], [Name],[IP]) VALUES (  @Content, @Name,@IP)"<br />
+SelectCommand="Select [ID], [IP], [Content], [EntryData], [Name] FROM [lyb]"  &gt;<br />
+&lt;InsertParameters&gt;<br />
+&lt;asp:Parameter Name="Content" /&gt;<br />
+&lt;asp:Parameter Name="Name" /&gt;</p>
+
+<p>&lt;asp:ControlParameter Name="IP"  ControlID="__page" PropertyName="IP"/&gt;</p>
+
+<p>&lt;/InsertParameters&gt;<br />
+在default3.aspx.cs中</p>
+
+<p>public string IP<br />
+{
+get<br />
+{
+return Request.UserHostAddress;<br />
+}
+}</p>
+
+<p>&nbsp;</p>
+
+<p>其中显示IP功能:</p>
+
+<p>注意：控件参数的ControlID属性值为_page，这个值为Page类自动生成的ID。而PropertName属性的值为IP，这个值在同一页面中定义的。</p>
+
+<p>作业:参考简易的留言板,制作一个类似可以显示时间和IP的留言板,可以扩充功能.(当前状态:<strong><span style="color: #ff0000;">未完成</span></strong>)</p>

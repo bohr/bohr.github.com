@@ -1,0 +1,20 @@
+---
+layout: post
+title: C# 的winform中使用数据库连接字符串
+categories:
+- 编程
+tags: []
+published: true
+comments: true
+---
+<p>在解决方案中增加一窗口选择xml文件，并将名称改为app.config.其内容设置如下：<br />
+&lt;?xml version="1.0" encoding="utf-8"?&gt;<br />
+&lt;configuration&gt;<br />
+&lt;appSettings&gt;<br />
+&lt;add key="source" value="Server=localhost;uid=sa;pwd='fang';database=khgx;" /&gt;<br />
+&lt;/appSettings&gt;<br />
+&lt;/configuration&gt;<br />
+请在引用中添加-System.configuration不然程序会提示错误。在程序中就可以这样调用：<br />
+private string source = System.Configuration.ConfigurationManager.AppSettings["source"];<br />
+conn = new SqlConnection(source);<br />
+打包安装后，可以直在安装的机器上面接修改配置文件，进行数据库连接。</p>

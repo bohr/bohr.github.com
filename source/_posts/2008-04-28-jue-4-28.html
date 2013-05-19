@@ -1,0 +1,47 @@
+---
+layout: post
+title: 君子抉（4月28日）
+categories:
+- 学习笔记
+- 编程
+tags: []
+published: true
+comments: true
+---
+<p>已经好几天没写了,今天也不知道是第几天,重新开始写.</p>
+
+<p>今天上午听老师讲课一直昏昏沉沉的,还不如自己看书了.今天看的是php和mysql一起的.</p>
+
+<p>主要是创建表单,函数,默认参数,日期和时间.再就是mysql中的SQL语句.</p>
+
+<p>1.创建和调用函数</p>
+
+<p>fuction  function_name()</p>
+
+<p>{</p>
+
+<p>//function code</p>
+
+<p>}</p>
+
+<p>2.函数代码的执行时间发生在调用函数时,而不是定义函数时.因此只需要在调用一个引用的全局变量的函数之前,定义改全局变量即可.</p>
+
+<p>3.避开使用全局变量作用域的另一个方法是按引用(而不是按值)传递一个变量.</p>
+
+<p>4.Unix Epoch 时间戳是1970年1月一日0点起所经过的秒数.</p>
+
+<p>5.mysql中char与varchar的区别:存储为char的任何内容总是被存储为列长度的字符串(使用空格填充它),想法,varchar字符串只与存储的字符串本身一样长.在检索数据时,Mysql会删除char列中多余的空格,对应varchar列,这种操作则会发生在插入数据时.</p>
+
+<p>6.在mysql中使用enum.如: gender  ENUM('M','F') default 'F'</p>
+
+<p>7.user_id是用户表的主键(PRIMARY KEY),对该列添加了AUTO_INCREMENT,就相当与标识种子</p>
+
+<p>8.升序ASC(默认),降序DESC</p>
+
+<p>9.MYSQL中限制查询结果数
+<blockquote>select *from tablename LIMIT 10    只查询前10条记录</blockquote></p>
+
+<p>select *from tablename LIMIT 10,20    从第11条记录开始(数据库中索引从0开始),一共返回20条记录.
+10.使用别名 as</p>
+
+<p>11.从表中获取随机的一行  SELECT  * from users ORDER BY RAND() LIMIT 1</p>

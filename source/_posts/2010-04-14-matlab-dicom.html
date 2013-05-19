@@ -1,0 +1,30 @@
+---
+layout: post
+title: 用Matlab处理Dicom图像
+categories:
+- 学习笔记
+tags: []
+published: true
+comments: true
+---
+<p>最近在处理CT图像时，CT图像是对人体进行逐层扫描的，在图像有很多不需要的部分，比如肋骨部分就夹杂在里面，导致三维重建出来的图像有很多不需要的部分。很不好处理。</p>
+
+<p>于是，我就想了了简单方法，对一张一张的dicom格式的图像，把里面不需要的像素点都置为黑色，这样就可以了。原打算用VC++6.0+VTK来实现的，调试起来太麻烦了，就直接用matlab来处理就简单了。</p>
+
+<p>1。读写Dicom格式的图像
+<div>
+<pre>I=dicomread('E:CT37222.dcm');   %读取图像
+metadata = dicominfo('E:CT37222.dcm');%存储信息
+imagesc(I);%显示图像</pre></div></p>
+
+<p>dicomwrite(I, 'E:CT37222.dcm',metadata);%写入Dicom图像
+
+2.在Dicom图像上面进行选取需要的矩形区域</p>
+
+<p>这个代码实现很简单，找到这个方法也费了一些波折</p>
+
+<p>[xv,yv] = ginput(2);  %这样就可以在图像上面选取2个点，将X坐标保存到xv中，将y坐标保存到yv中。</p>
+
+<p>如果有很多点形成一个矩形区域的话，可以用  in = inpolygon(x,y,xv,yv); 来判断，x，y坐标是否在选取的点围成的区域中。</p>
+
+<p><a href="http://images.cnblogs.com/cnblogs_com/Chevalier/WindowsLiveWriter/MatlabDicom_12CC9/image_2.png"><img style="display: inline; border-width: 0px;" title="image" alt="image" src="http://yanggang.me/images/daijun/wp-content/uploads/2013/05/image_thumb.png" width="244" height="242" border="0" /></a></p>

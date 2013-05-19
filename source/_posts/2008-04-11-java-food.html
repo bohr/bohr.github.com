@@ -1,0 +1,153 @@
+---
+layout: post
+title: 宋建邦之java售饭机之有限状态机
+categories:
+- 算法
+tags: []
+published: true
+comments: true
+---
+<p><pre class="csharpcode"><span class="rem">// TODO 自动生成方法存根</span>
+<span class="kwrd">if</span> (!bInsert)
+<span class="kwrd">return</span>;
+<span class="kwrd">if</span>(sum+temp*100 &gt; 100000)
+<span class="kwrd">return</span>;
+String command = e.getActionCommand();
+System.<span class="kwrd">out</span>.println(command);
+<span class="kwrd">switch</span> (status) {
+<span class="kwrd">case</span> S_INIT:
+<span class="kwrd">case</span> S_ADD:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+temp = temp * 10 + Integer.parseInt(command);
+<span class="kwrd">break</span>;
+}
+sum += temp*100;
+temp = 0;
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+status = S_SUB;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"."</span>) {
+dec = <span class="str">"0."</span>;
+status = S_ADD_POINT;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">case</span> S_SUB:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+temp = temp * 10 - Integer.parseInt(command);
+<span class="kwrd">break</span>;
+}
+sum += temp*100;
+temp = 0;
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+status = S_ADD;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"."</span>) {
+dec = <span class="str">"-0."</span>;
+status = S_SUB_POINT;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">case</span> S_ADD_POINT:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+<span class="kwrd">if</span>(dec.length() &gt;= 4)
+<span class="kwrd">break</span>;
+dec += command;
+<span class="kwrd">break</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_ADD;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_SUB;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">break</span>;
+<span class="kwrd">case</span> S_SUB_POINT:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+<span class="kwrd">if</span>(dec.length() &gt;= 5)
+<span class="kwrd">break</span>;
+dec += command;
+<span class="kwrd">break</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_ADD;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_SUB;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">break</span>;
+}
+<span class="kwrd">int</span> t = 0;
+<span class="kwrd">if</span> (dec != <span class="kwrd">null</span>){
+String str = String.valueOf((Double.parseDouble(dec)*100));
+t = (sum + temp *100+Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>))));
+<span class="kwrd">if</span>(balance - t &lt; 0||t&lt;0){
+JOptionPane.showMessageDialog(<span class="kwrd">this</span>, <span class="str">"余额不足!"</span>);
+reset();
+sCurrent.display(0);
+sBalance.display(balance);
+<span class="kwrd">return</span>;
+}
+sCurrent.display(t);
+sBalance.display(balance - t);
+}
+<span class="kwrd">else</span>{
+t = sum + temp * 100;
+<span class="kwrd">if</span>(balance - t &lt; 0 || t&lt;0){
+JOptionPane.showMessageDialog(<span class="kwrd">this</span>, <span class="str">"余额不足!"</span>);
+reset();
+sCurrent.display(0);
+sBalance.display(balance);
+<span class="kwrd">return</span>;
+}
+sCurrent.display(t);
+sBalance.display(balance - t);
+}</pre>
+<style type="text/css"><!--<br>
+.csharpcode, .csharpcode pre<br>
+{
+font-size: small;<br>
+color: black;<br>
+font-family: consolas, "Courier New", courier, monospace;<br>
+background-color: #ffffff;<br>
+/*white-space: pre;*/<br>
+}
+.csharpcode pre { margin: 0em; }<br>
+.csharpcode .rem { color: #008000; }<br>
+.csharpcode .kwrd { color: #0000ff; }<br>
+.csharpcode .str { color: #006080; }<br>
+.csharpcode .op { color: #0000c0; }<br>
+.csharpcode .preproc { color: #cc6633; }<br>
+.csharpcode .asp { background-color: #ffff00; }<br>
+.csharpcode .html { color: #800000; }<br>
+.csharpcode .attr { color: #ff0000; }<br>
+.csharpcode .alt<br>
+{
+background-color: #f4f4f4;<br>
+width: 100%;<br>
+margin: 0em;<br>
+}
+.csharpcode .lnum { color: #606060; }<br>
+--></style></p>

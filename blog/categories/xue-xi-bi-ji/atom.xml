@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: 学习笔记 | My Octopress Blog]]></title>
+  <title><![CDATA[Category: 学习笔记 | Coolbohr's  Blog]]></title>
   <link href="http://bohr.github.io/blog/categories/xue-xi-bi-ji/atom.xml" rel="self"/>
   <link href="http://bohr.github.io/"/>
-  <updated>2013-05-19T07:31:03+00:00</updated>
+  <updated>2013-05-19T07:49:38+00:00</updated>
   <id>http://bohr.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
-    
+    <name><![CDATA[DAI Jun]]></name>
+    <email><![CDATA[coolbohr@gmail.com]]></email>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 

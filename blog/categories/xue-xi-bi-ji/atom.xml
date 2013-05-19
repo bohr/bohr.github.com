@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 学习笔记 | My Octopress Blog]]></title>
+  <link href="http://bohr.github.io/blog/categories/xue-xi-bi-ji/atom.xml" rel="self"/>
+  <link href="http://bohr.github.io/"/>
+  <updated>2013-05-19T07:07:47+00:00</updated>
+  <id>http://bohr.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[GDB学习笔记]]></title>
+    <link href="http://bohr.github.io/blog/2011/02/16/gdb-study/"/>
+    <updated>2011-02-16T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2011/02/16/gdb-study</id>
+    <content type="html"><![CDATA[<p><h4>一些参考网页：
+<a href="http://blog.ksplice.com/2011/01/8-gdb-tricks/" target="_blank">8 gdb tricks you should know</a>
+<a href="http://wangcong.org/articles/learning-gdb.cn.html" target="_blank">学习使用 GNU GDB Debugger</a>
+<a href="http://coolshell.cn/articles/3643.html" target="_blank">GDB中应该知道的几个调试方法</a></h4>
+<strong>用GDB调试程序系列：</strong>  <a title="http://blog.csdn.net/haoel/archive/2003/07/02/2879.aspx" href="http://blog.csdn.net/haoel/archive/2003/07/02/2879.aspx">http://blog.csdn.net/haoel/archive/2003/07/02/2879.aspx</a></p>
+
+
+
+
+<p>Two more very useful tricks:</p>
+
+
+
+
+<p>1. Setting hardware breakpoints on data does not slow program execution and stops when the specific variable is modified. Sometimes gdb automatically sets HW breakpoint when you say watch . Sometimes you have to force it by using something like:</p>
+
+
+
+
+<p>set x = &amp;<br />
+watch *$x</p>
+
+
+
+
+<p>2. You can set an “ignore count” on any breakpoint using “ignore “. GDB will stop after the breakpoint was hit that many times. The standard way to use this is to set the ignore count very high (say, 9999), run the program till it crashes or otherwise stops after an interesting event, and then use “info bp ” to determine how many times the breakpoint was hit. Then set the ignore count to that number -1 and rerun. The debugger will stop just before the interesting event.
+<h4>GDB Essential commands</h4>
+The command set of GDB really is quite concise and intuitive,<br />
+so learn it now so you don't have to when things are going pear shaped!
+<table class="pixelbeat">
+<tbody>
+<tr class="pbtitle">
+<td><b>Command</b></td>
+<td><b>Abbrev</b></td>
+<td><b>Description</b></td>
+</tr>
+<tr>
+<td>set args</td>
+<td></td>
+<td>set command args. Also can do: gdb --args command arg1 ...</td>
+</tr>
+<tr>
+<td>break</td>
+<td>b</td>
+<td>set breakpoint (at function, line number, ...)</td>
+</tr>
+<tr>
+<td>disable</td>
+<td>dis</td>
+<td>disable breakpoints (all by default)</td>
+</tr>
+<tr>
+<td>enable</td>
+<td>en</td>
+<td>enable breakpoints (all by default)</td>
+</tr>
+<tr>
+<td>run</td>
+<td>r</td>
+<td>(re)start execution</td>
+</tr>
+<tr>
+<td>continue</td>
+<td>c</td>
+<td>continue execution</td>
+</tr>
+<tr>
+<td>step</td>
+<td>s</td>
+<td>next line</td>
+</tr>
+<tr>
+<td>next</td>
+<td>n</td>
+<td>next line without recursing into functions</td>
+</tr>
+<tr>
+<td>finish</td>
+<td>fin</td>
+<td>next line after this function returns</td>
+</tr>
+<tr>
+<td>until &lt;line&gt;</td>
+<td></td>
+<td>continue execution until line number</td>
+</tr>
+<tr>
+<td>list</td>
+<td>l</td>
+<td>show source (for line, function, offset, ...)</td>
+</tr>
+<tr>
+<td>backtrace</td>
+<td>bt</td>
+<td>show the stack of functions. Add "full" to include local variables</td>
+</tr>
+<tr>
+<td>thread apply all bt</td>
+<td>t a a bt</td>
+<td>show the stack of functions in all threads</td>
+</tr>
+<tr>
+<td>print var</td>
+<td>p</td>
+<td>display a variable. Use p/x for hex</td>
+</tr>
+<tr>
+<td>x/16xb &lt;addr&gt;</td>
+<td></td>
+<td>hexdump 16 bytes at address</td>
+</tr>
+<tr>
+<td>watch</td>
+<td>wa</td>
+<td>break when variable changes value</td>
+</tr>
+<tr>
+<td>display</td>
+<td>disp</td>
+<td>display expression each time program stops</td>
+</tr>
+<tr>
+<td>info locals</td>
+<td>inf loc</td>
+<td>display local variables</td>
+</tr>
+<tr>
+<td>help ...</td>
+<td>h</td>
+<td>display online help</td>
+</tr>
+<tr>
+<td>focus next</td>
+<td>fs n</td>
+<td>switch window (allows cursor keys in CMD window for e.g.)</td>
+</tr>
+<tr>
+<td>[Ctrl-x a]</td>
+<td></td>
+<td>toggle the text windowing interface</td>
+</tr>
+<tr>
+<td>[Ctrl-L]</td>
+<td></td>
+<td>redraw the display (if program outputs for example)</td>
+</tr>
+<tr>
+<td>[Return]</td>
+<td></td>
+<td>repeat the last command</td>
+</tr>
+</tbody>
+</table></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Gratuitous ARP]]></title>
+    <link href="http://bohr.github.io/blog/2011/02/14/gratuitous-arp/"/>
+    <updated>2011-02-14T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2011/02/14/gratuitous-arp</id>
+    <content type="html"><![CDATA[<p><p>以太网中为什么要用到Gratuitous ARP（以下简称GARP）呢？</p>  <p>第一，主机可以通过GARP向网络发送广播，以告诉整个广播域，目前某个IP所对应的MAC地址是什么——这一行为就像是在发宣传单，而宣传单是不需要回应的。</p>  <p>第二，主机是想看看广播域内有没有别的主机使用自己的IP地址，如果使用了，则在界面上弹出“IP冲突”字样。普通ARP请求报文广播发送出去，广播域内所有主机都会接收到，计算机系统判断ARP请求报文中的目的IP地址字段，如果发现和本机的IP地址相同，则将自己的MAC 地址填写到该报文的目的MAC地址字段，并将该报文发回给源主机。所以只要发送ARP请求的主机接收到报文，则证明广播域内有别的主机使用和自己相同的 IP地址（这里不考虑路由器的ARP代理问题）。免费ARP的报文发出去是不希望收到回应的，只希望是起宣告作用；如果收到回应，则证明对方也使用自己目前使用的IP地址，</p>  <h3></h3>  <p><strong>Gratuitous ARP</strong> could mean both gratuitous ARP <em>request</em> or gratuitous ARP <em>reply</em>. Gratuitous in this case means a request/reply that is not normally needed according to the ARP specification (RFC 826) but could be used in some cases. A gratuitous ARP request is an <a href="http://wiki.wireshark.org/AddressResolutionProtocol">AddressResolutionProtocol</a> request packet where the source and destination IP are both set to the IP of the machine issuing the packet and the destination MAC is the broadcast address <tt>ff:ff:ff:ff:ff:ff</tt>. Ordinarily, no reply packet will occur. A gratuitous ARP reply is a reply to which no request has been made.</p></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[用Matlab处理Dicom图像]]></title>
+    <link href="http://bohr.github.io/blog/2010/04/14/matlab-dicom/"/>
+    <updated>2010-04-14T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2010/04/14/matlab-dicom</id>
+    <content type="html"><![CDATA[<p>最近在处理CT图像时，CT图像是对人体进行逐层扫描的，在图像有很多不需要的部分，比如肋骨部分就夹杂在里面，导致三维重建出来的图像有很多不需要的部分。很不好处理。</p>
+
+
+
+
+<p>于是，我就想了了简单方法，对一张一张的dicom格式的图像，把里面不需要的像素点都置为黑色，这样就可以了。原打算用VC++6.0+VTK来实现的，调试起来太麻烦了，就直接用matlab来处理就简单了。</p>
+
+
+
+
+<p>1。读写Dicom格式的图像
+<div>
+<pre>I=dicomread('E:CT37222.dcm');   %读取图像
+metadata = dicominfo('E:CT37222.dcm');%存储信息
+imagesc(I);%显示图像</pre></div></p>
+
+
+
+
+<p>dicomwrite(I, 'E:CT37222.dcm',metadata);%写入Dicom图像
+
+2.在Dicom图像上面进行选取需要的矩形区域</p>
+
+
+
+
+<p>这个代码实现很简单，找到这个方法也费了一些波折</p>
+
+
+
+
+<p>[xv,yv] = ginput(2);  %这样就可以在图像上面选取2个点，将X坐标保存到xv中，将y坐标保存到yv中。</p>
+
+
+
+
+<p>如果有很多点形成一个矩形区域的话，可以用  in = inpolygon(x,y,xv,yv); 来判断，x，y坐标是否在选取的点围成的区域中。</p>
+
+
+
+
+<p><a href="http://images.cnblogs.com/cnblogs_com/Chevalier/WindowsLiveWriter/MatlabDicom_12CC9/image_2.png"><img style="display: inline; border-width: 0px;" title="image" alt="image" src="http://yanggang.me/images/daijun/wp-content/uploads/2013/05/image_thumb.png" width="244" height="242" border="0" /></a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[君子抉（4月28日）]]></title>
+    <link href="http://bohr.github.io/blog/2008/04/28/jue-4-28/"/>
+    <updated>2008-04-28T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2008/04/28/jue-4-28</id>
+    <content type="html"><![CDATA[<p>已经好几天没写了,今天也不知道是第几天,重新开始写.</p>
+
+
+
+
+<p>今天上午听老师讲课一直昏昏沉沉的,还不如自己看书了.今天看的是php和mysql一起的.</p>
+
+
+
+
+<p>主要是创建表单,函数,默认参数,日期和时间.再就是mysql中的SQL语句.</p>
+
+
+
+
+<p>1.创建和调用函数</p>
+
+
+
+
+<p>fuction  function_name()</p>
+
+
+
+
+<p>{</p>
+
+
+
+
+<p>//function code</p>
+
+
+
+
+<p>}</p>
+
+
+
+
+<p>2.函数代码的执行时间发生在调用函数时,而不是定义函数时.因此只需要在调用一个引用的全局变量的函数之前,定义改全局变量即可.</p>
+
+
+
+
+<p>3.避开使用全局变量作用域的另一个方法是按引用(而不是按值)传递一个变量.</p>
+
+
+
+
+<p>4.Unix Epoch 时间戳是1970年1月一日0点起所经过的秒数.</p>
+
+
+
+
+<p>5.mysql中char与varchar的区别:存储为char的任何内容总是被存储为列长度的字符串(使用空格填充它),想法,varchar字符串只与存储的字符串本身一样长.在检索数据时,Mysql会删除char列中多余的空格,对应varchar列,这种操作则会发生在插入数据时.</p>
+
+
+
+
+<p>6.在mysql中使用enum.如: gender  ENUM('M','F') default 'F'</p>
+
+
+
+
+<p>7.user_id是用户表的主键(PRIMARY KEY),对该列添加了AUTO_INCREMENT,就相当与标识种子</p>
+
+
+
+
+<p>8.升序ASC(默认),降序DESC</p>
+
+
+
+
+<p>9.MYSQL中限制查询结果数
+<blockquote>select *from tablename LIMIT 10    只查询前10条记录</blockquote></p>
+
+
+
+
+<p>select *from tablename LIMIT 10,20    从第11条记录开始(数据库中索引从0开始),一共返回20条记录.
+10.使用别名 as</p>
+
+
+
+
+<p>11.从表中获取随机的一行  SELECT  * from users ORDER BY RAND() LIMIT 1</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[忙里偷闲4.22]]></title>
+    <link href="http://bohr.github.io/blog/2008/04/23/jue-4-22/"/>
+    <updated>2008-04-23T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2008/04/23/jue-4-22</id>
+    <content type="html"><![CDATA[<p>昨天从上午起床到晚上就一直在忙,晚上停了电发现自己今天还是忙的时候少,闲的时候多啊.大清早的起来让兴旺帮我写论文,我在编自动下载的程序,感觉到了最后更本不能实现了就让兴旺画了张流程图,我再贴上代码糊弄了一下.然后去上课,今天第一节接口听得不大明白了,感觉自己缺了不少课了,过一段时间再把它拾回来.第二节是孔老师的C#,讲得挺没意思的.我就自己看书,结果过了一会,我就看不下去了.她在讲我写的上机作业,心中窃喜,原来把我的作业当作样本讲啊.她没说是谁做到,不过有不少人看过我代码,明白是我的.在讲的时候,还把我的一个概率分布给讲错了,我的都是设计好的,让她给想象成另一个样了.不过我也没说,别人看过的没多少明白的,关键是我没有写注释和帮助.讲完了我的两个程序,我也看不下去书了,就和张超在那聊天.听他说,他想去做一个类似于QQ的聊天、传文件的软件，想把它发布到华军上，说要能做个东西并发布到网上，大学四年也算是没有白上了。我想也是，都快三年了，也没有一个什么正式的成果出来。我和他说，要做就做个跨平台的，他说他用java做，我想我俩一块做，我换个语言，看是用C还是用C#做。到了中午，把上午写的东西和兴旺写的和到一块，然后再把东西改了改，都差不多了，结果wp打电话来了，让我下去，没办法就下去和wp去了网络楼。去了网络楼又去了水化楼，那两个老师也挺能磨的，搞了半天，最后我找了个机会逃了出来，直奔科学实验楼。结果去了才知道，兴旺早就去了，都在门口睡着了，让曹乐就叫醒的，这都怪我不好的。之后我就帮兴旺改论文，改着改着就去拿着小车去照相。隔行如隔山，虽说以前都一个专业的，但还是很多都不大明白，只能简单的改了改。也不知怎么弄的，也没改多少，在五楼也没干什么事就到了6点半去吃饭了。回去实验室也没过多久就回来了。回来途中，还照了几张像，感觉有那种老相片的味道在里面。回来了也没干多少事，帮兴旺改了改ppt，看了看肖东光的科技立项，感觉挺不错的，一个示波器包含能想到的功能，还有更多想不到的功能也有。再就看了另一个科技立项的，也很好用的是太阳能电池板，好几百一个的东西，还有遥控控制、光控等功能。<br />
+今天学习的内容：<br />
+DetailsView的分页 显示 排序等功能.<br />
+写完了,突然感觉今天写的完全就是记流水账.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

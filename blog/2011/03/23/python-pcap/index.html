@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
+  <title>利用Python来解析Pcap包 - My Octopress Blog</title>
   <meta name="author" content="Your Name">
 
   
-  <meta name="description" content="Ineffable Shopping Guide 是我们参加微软校园菁英计划之“有求必应”结构化数据搜索是想到的。主要目的还是因为面对那些琳琅满目的商品你是否觉得无从下手，买各种数码产品首先都是到处找该产品的评论信息。我们就准备将这些产品的评论信息进行整合起来，这样就极大的方便了用户， &hellip;">
+  <meta name="description" content="Tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。 这个我在截取的一段Tcpdump的数据包。通常可以采用wireshark来对Tcpdump数据包进行分析。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://bohr.github.io">
+  <link rel="canonical" href="http://bohr.github.io/blog/2011/03/23/python-pcap">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
@@ -63,148 +63,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2011/10/10/ineffable-shopping-guide/">Ineffable Shopping Guide 介绍</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-10T00:00:00+00:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Ineffable Shopping Guide 是我们参加微软校园菁英计划之“有求必应”结构化数据搜索是想到的。主要目的还是因为面对那些琳琅满目的商品你是否觉得无从下手，买各种数码产品首先都是到处找该产品的评论信息。我们就准备将这些产品的评论信息进行整合起来，这样就极大的方便了用户，既给了用户想知道的信息，又为用户提供了没有考虑到的信息。下面是我们作品展示的海报。在线Demo展示：<a href="http://shopping.daijun.info">http://shopping.daijun.info</a></p>
-
-<p><a href="http://yanggang.me/images/daijun/wp-content/uploads/2011/10/large_V5I0_503900007a9412601.jpg"><img class="alignnone size-full wp-image-7048" alt="large_V5I0_503900007a941260" src="http://yanggang.me/images/daijun/wp-content/uploads/2011/10/large_V5I0_503900007a9412601.jpg" width="709" height="720" /></a></p>
-
-<p><strong>在线视频：</strong></p>
-
-<p><object width="480" height="400" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" align="middle"><param name="src" value="http://player.youku.com/player.php/sid/XMjg4MTgxNzM2/v.swf" /><param name="allowfullscreen" value="true" /><param name="quality" value="high" /><param name="allowscriptaccess" value="always" /><embed width="480" height="400" type="application/x-shockwave-flash" src="http://player.youku.com/player.php/sid/XMjg4MTgxNzM2/v.swf" allowfullscreen="true" quality="high" allowscriptaccess="always" align="middle" /></object></p>
-
-<p><strong>技术说明</strong>
-<div id="__ss_9627040" style="width: 425px;"><strong style="margin: 12px 0px 4px; display: block;"><a title="Ineffable Shopping Guide 结构化搜索" href="http://www.slideshare.net/dj3141592653/ineffable-shopping-guide" target="_blank">Ineffable Shopping Guide 结构化搜索</a></strong> <object id="__sse9627040" width="425" height="355" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="src" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=random-111010040424-phpapp01&amp;stripped_title=ineffable-shopping-guide&amp;userName=dj3141592653" /><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><embed id="__sse9627040" width="425" height="355" type="application/x-shockwave-flash" src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=random-111010040424-phpapp01&amp;stripped_title=ineffable-shopping-guide&amp;userName=dj3141592653" allowfullscreen="true" allowscriptaccess="always" /><img src="http://yanggang.me/images/daijun/wp-includes/js/tinymce/themes/advanced/img/trans.gif" class="mceItemMedia mceItemFlash" width="425" height="355" data-mce-json="{'video':{},'params':{'src':'http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=random-111010040424-phpapp01&amp;stripped_title=ineffable-shopping-guide&amp;userName=dj3141592653','allowscriptaccess':'always','allowfullscreen':'true'},'hspace':null,'vspace':null,'align':null,'bgcolor':null}" alt="" /></object></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/10/10/childsearch-2010/">Childsearch&#8212;-2010腾讯校园之星作品</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-10T00:00:00+00:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><ul>
-	<li>专为儿童开发的搜索引擎，主要功能有：</li>
-	<li>拼音搜索功能</li>
-	<li>自动对输入关键字分类</li>
-	<li>智能匹配电影、游戏</li>
-	<li>游戏可以自动播放</li>
-</ul>
-<h5><a href="http://labs.soso.com/cstar2011/xqtop.html#project_id=9476">作品展示</a></h5>
-<h5><a href="http://113.105.93.45:8000/">在线运行</a></h5>
-<img alt="" src="http://wiki.daijun.info/images/childsearch.png" width="750" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/07/28/ineffable-shopping-guide-2/">Ineffable Shopping Guide 结构化搜索技术介绍</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-28T00:00:00+00:00" pubdate data-updated="true">Jul 28<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><div id="__ss_9627040" style="width: 425px;"><strong style="margin: 12px 0px 4px; display: block;"><a title="Ineffable Shopping Guide 结构化搜索" href="http://www.slideshare.net/dj3141592653/ineffable-shopping-guide">Ineffable Shopping Guide 结构化搜索</a></strong><object id="__sse9627040" width="425" height="355" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="src" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=random-111010040424-phpapp01&amp;stripped_title=ineffable-shopping-guide&amp;userName=dj3141592653" /><param name="allowscriptaccess" value="always" /><param name="allowfullscreen" value="true" /><embed id="__sse9627040" width="425" height="355" type="application/x-shockwave-flash" src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=random-111010040424-phpapp01&amp;stripped_title=ineffable-shopping-guide&amp;userName=dj3141592653" allowfullscreen="true" allowscriptaccess="always" /></object>
-<div style="padding-bottom: 12px; padding-left: 0px; padding-right: 0px; padding-top: 5px;">View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/dj3141592653">dj3141592653</a>.</div>
-</div>
-介绍说明：<a href="http://daijun.info/?p=7041">http://daijun.info/?p=7041</a></p>
-
-<p>主要技术：爬虫（Python）+分词（盘古分词）+ Lucene.Net</p>
-
-<p>爬虫代码：<a href="https://github.com/xddaijun/Shopping-Guide">https://github.com/xddaijun/Shopping-Guide</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/03/23/python-pcap/">利用Python来解析Pcap包</a></h1>
+      <h1 class="entry-title">利用Python来解析Pcap包</h1>
     
     
       <p class="meta">
@@ -227,7 +91,7 @@
   </header>
 
 
-  <div class="entry-content"><p>Tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。</p>
+<div class="entry-content"><p>Tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。</p>
 
 <p><a href="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/3.png"><img class="alignnone size-full wp-image-7061" alt="3" src="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/3.png" width="620" height="279" /></a></p>
 
@@ -382,198 +246,16 @@
 
 <p>pcap下载地址：<a title="http://code.google.com/p/pypcap/" href="http://code.google.com/p/pypcap/">http://code.google.com/p/pypcap/</a></p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/02/16/gdb-study/">GDB学习笔记</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
 
-<time datetime="2011-02-16T00:00:00+00:00" pubdate data-updated="true">Feb 16<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><h4>一些参考网页：
-<a href="http://blog.ksplice.com/2011/01/8-gdb-tricks/" target="_blank">8 gdb tricks you should know</a>
-<a href="http://wangcong.org/articles/learning-gdb.cn.html" target="_blank">学习使用 GNU GDB Debugger</a>
-<a href="http://coolshell.cn/articles/3643.html" target="_blank">GDB中应该知道的几个调试方法</a></h4>
-<strong>用GDB调试程序系列：</strong>  <a title="http://blog.csdn.net/haoel/archive/2003/07/02/2879.aspx" href="http://blog.csdn.net/haoel/archive/2003/07/02/2879.aspx">http://blog.csdn.net/haoel/archive/2003/07/02/2879.aspx</a></p>
-
-<p>Two more very useful tricks:</p>
-
-<p>1. Setting hardware breakpoints on data does not slow program execution and stops when the specific variable is modified. Sometimes gdb automatically sets HW breakpoint when you say watch . Sometimes you have to force it by using something like:</p>
-
-<p>set x = &amp;<br />
-watch *$x</p>
-
-<p>2. You can set an “ignore count” on any breakpoint using “ignore “. GDB will stop after the breakpoint was hit that many times. The standard way to use this is to set the ignore count very high (say, 9999), run the program till it crashes or otherwise stops after an interesting event, and then use “info bp ” to determine how many times the breakpoint was hit. Then set the ignore count to that number -1 and rerun. The debugger will stop just before the interesting event.
-<h4>GDB Essential commands</h4>
-The command set of GDB really is quite concise and intuitive,<br />
-so learn it now so you don&#8217;t have to when things are going pear shaped!
-<table class="pixelbeat">
-<tbody>
-<tr class="pbtitle">
-<td><b>Command</b></td>
-<td><b>Abbrev</b></td>
-<td><b>Description</b></td>
-</tr>
-<tr>
-<td>set args</td>
-<td></td>
-<td>set command args. Also can do: gdb &#8211;args command arg1 &#8230;</td>
-</tr>
-<tr>
-<td>break</td>
-<td>b</td>
-<td>set breakpoint (at function, line number, &#8230;)</td>
-</tr>
-<tr>
-<td>disable</td>
-<td>dis</td>
-<td>disable breakpoints (all by default)</td>
-</tr>
-<tr>
-<td>enable</td>
-<td>en</td>
-<td>enable breakpoints (all by default)</td>
-</tr>
-<tr>
-<td>run</td>
-<td>r</td>
-<td>(re)start execution</td>
-</tr>
-<tr>
-<td>continue</td>
-<td>c</td>
-<td>continue execution</td>
-</tr>
-<tr>
-<td>step</td>
-<td>s</td>
-<td>next line</td>
-</tr>
-<tr>
-<td>next</td>
-<td>n</td>
-<td>next line without recursing into functions</td>
-</tr>
-<tr>
-<td>finish</td>
-<td>fin</td>
-<td>next line after this function returns</td>
-</tr>
-<tr>
-<td>until &lt;line&gt;</td>
-<td></td>
-<td>continue execution until line number</td>
-</tr>
-<tr>
-<td>list</td>
-<td>l</td>
-<td>show source (for line, function, offset, &#8230;)</td>
-</tr>
-<tr>
-<td>backtrace</td>
-<td>bt</td>
-<td>show the stack of functions. Add &#8220;full&#8221; to include local variables</td>
-</tr>
-<tr>
-<td>thread apply all bt</td>
-<td>t a a bt</td>
-<td>show the stack of functions in all threads</td>
-</tr>
-<tr>
-<td>print var</td>
-<td>p</td>
-<td>display a variable. Use p/x for hex</td>
-</tr>
-<tr>
-<td>x/16xb &lt;addr&gt;</td>
-<td></td>
-<td>hexdump 16 bytes at address</td>
-</tr>
-<tr>
-<td>watch</td>
-<td>wa</td>
-<td>break when variable changes value</td>
-</tr>
-<tr>
-<td>display</td>
-<td>disp</td>
-<td>display expression each time program stops</td>
-</tr>
-<tr>
-<td>info locals</td>
-<td>inf loc</td>
-<td>display local variables</td>
-</tr>
-<tr>
-<td>help &#8230;</td>
-<td>h</td>
-<td>display online help</td>
-</tr>
-<tr>
-<td>focus next</td>
-<td>fs n</td>
-<td>switch window (allows cursor keys in CMD window for e.g.)</td>
-</tr>
-<tr>
-<td>[Ctrl-x a]</td>
-<td></td>
-<td>toggle the text windowing interface</td>
-</tr>
-<tr>
-<td>[Ctrl-L]</td>
-<td></td>
-<td>redraw the display (if program outputs for example)</td>
-</tr>
-<tr>
-<td>[Return]</td>
-<td></td>
-<td>repeat the last command</td>
-</tr>
-</tbody>
-</table></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/02/14/gratuitous-arp/">Gratuitous ARP</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -585,244 +267,40 @@ so learn it now so you don&#8217;t have to when things are going pear shaped!
   
 
 
-<time datetime="2011-02-14T00:00:00+00:00" pubdate data-updated="true">Feb 14<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><p>以太网中为什么要用到Gratuitous ARP（以下简称GARP）呢？</p>  <p>第一，主机可以通过GARP向网络发送广播，以告诉整个广播域，目前某个IP所对应的MAC地址是什么——这一行为就像是在发宣传单，而宣传单是不需要回应的。</p>  <p>第二，主机是想看看广播域内有没有别的主机使用自己的IP地址，如果使用了，则在界面上弹出“IP冲突”字样。普通ARP请求报文广播发送出去，广播域内所有主机都会接收到，计算机系统判断ARP请求报文中的目的IP地址字段，如果发现和本机的IP地址相同，则将自己的MAC 地址填写到该报文的目的MAC地址字段，并将该报文发回给源主机。所以只要发送ARP请求的主机接收到报文，则证明广播域内有别的主机使用和自己相同的 IP地址（这里不考虑路由器的ARP代理问题）。免费ARP的报文发出去是不希望收到回应的，只希望是起宣告作用；如果收到回应，则证明对方也使用自己目前使用的IP地址，</p>  <h3></h3>  <p><strong>Gratuitous ARP</strong> could mean both gratuitous ARP <em>request</em> or gratuitous ARP <em>reply</em>. Gratuitous in this case means a request/reply that is not normally needed according to the ARP specification (RFC 826) but could be used in some cases. A gratuitous ARP request is an <a href="http://wiki.wireshark.org/AddressResolutionProtocol">AddressResolutionProtocol</a> request packet where the source and destination IP are both set to the IP of the machine issuing the packet and the destination MAC is the broadcast address <tt>ff:ff:ff:ff:ff:ff</tt>. Ordinarily, no reply packet will occur. A gratuitous ARP reply is a reply to which no request has been made.</p></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2011-03-23T00:00:00+00:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2011</time>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/10/19/cheat-sheet/">很好的几个Cheat Sheet</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/bian-cheng/'>编程</a>
+  
+</span>
 
 
-<time datetime="2010-10-19T00:00:00+00:00" pubdate data-updated="true">Oct 19<span>th</span>, 2010</time>
-        
-      </p>
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>一个很偶然的机会，发现还有人制作好的python的快速手册，相当精美。</p>
-
-<p><a href="http://yanggang.me/images/daijun/wp-content/uploads/2010/10/6.png"><img class="alignnone size-full wp-image-7074" alt="6" src="http://yanggang.me/images/daijun/wp-content/uploads/2010/10/6.png" width="353" height="480" /></a></p>
-
-<p>看上图，这里还有很多 python、<a href="http://www.addedbytes.com/cheat-sheets/regular-expressions-cheat-sheet/">Regular Expressions</a> 等等。</p>
-
-<p>网址是<a title="http://www.addedbytes.com/cheat-sheets/" href="http://www.addedbytes.com/cheat-sheets/">http://www.addedbytes.com/cheat-sheets/</a>，他主要侧重于web开发</p>
-
-<p>在搜索后还发现了一个，主要侧重于网络的。<a title="http://packetlife.net/library/cheat-sheets/" href="http://packetlife.net/library/cheat-sheets/">http://packetlife.net/library/cheat-sheets/</a></p>
-
-<p>此外还有几个哲思软件社区做的几个学习笔记，也可以参考一下。</p>
-
-<p><a href="http://amosk.info/pub/doc/learning-mysql.cn.html">Learning Mysql</a>
-<a href="http://amosk.info/pub/doc/learning-git.cn.html">Learning Git</a>
-<a href="http://amosk.info/pub/doc/learning-apache.cn.html">Learning Apache</a></p>
-
-<p>from <a title="http://amosk.info/program.html" href="http://amosk.info/program.html">http://amosk.info/program.html</a></p>
-
-<p>&nbsp;</p>
-
-<p>&nbsp;</p>
-
-<p><a href="http://wangcong.org/articles/learning-gcc.cn.html">Learning gcc</a> (in Chinese)
-<a href="http://wangcong.org/articles/learning-gdb.cn.html">Learning gdb</a> (in Chinese)
-<a href="http://wangcong.org/articles/learning-iptables.cn.html">Learning iptables</a> (in Chinese)</p>
-
-<p>from <a title="http://wangcong.org/articles/index.html" href="http://wangcong.org/articles/index.html">http://wangcong.org/articles/index.html</a></p>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://bohr.github.io/blog/2011/03/23/python-pcap/" data-via="" data-counturl="http://bohr.github.io/blog/2011/03/23/python-pcap/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/05/07/x_memo-demo/">皮影记&#8211;西电x_memo团队2010微软精英挑战赛第二阶段项目demo</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-05-07T00:00:00+00:00" pubdate data-updated="true">May 7<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>皮影记——西电x_memo团队2010微软精英挑战赛第二阶段项目demo</p>
-
-<p><object style="text-align: center; margin: 0px auto 10px; display: block;" width="480" height="418" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="src" value="http://player.youku.com/player.php/sid/XMTcxMTE3ODY0/v.swf" /><embed style="text-align: center; margin: 0px auto 10px; display: block;" width="480" height="418" type="application/x-shockwave-flash" src="http://player.youku.com/player.php/sid/XMTcxMTE3ODY0/v.swf" /></object></p>
-
-<p><span style="font-family: Arial;"> </span></p>
-
-<p><strong>视频旁白</strong></p>
-
-<p>0:31 In the ancient China, Piying was very popular among folks.</p>
-
-<p>0:38 But this traditional fashion can not keep the pace with the modern ones. And now we set out to evoke the glory!</p>
-
-<p>1:17 On our way, we are not alone!</p>
-
-<p>1:49 A complex operation and an aging character limits its popularity in our era.</p>
-
-<p>2:24 And now we got the solution to bring it up to date. Street wear, pop music and free dance all combines the modern performance.</p>
-
-<p>2:46 To expect more, you’re not alone during experiencing. Pictures can be uploaded with colorful stories hidden within hotspots area. Then others will easily touch your unique memory.</p>
-
-<p>3:06 Feelings will be less different with reality after wearing a special glove with the Motion Detector Controller.</p>
-
-<p>But now we are still on the way！！</p>
-
-<p>西安电子科技大学微软技术俱乐部x_memo团队</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+        <a class="basic-alignment left" href="/blog/2011/02/16/gdb-study/" title="Previous Post: GDB学习笔记">&laquo; GDB学习笔记</a>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/04/25/shadow/">德国朋友看好我们的皮影项目</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-25T00:00:00+00:00" pubdate data-updated="true">Apr 25<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我们x_memo团队在西安回民街寻访民间皮影艺人时，和一位德国朋友有过很多交谈，下面的视频是其中的一个小片段。在他看来，现在很多人都在盲目地追求流行文化，却忘记了常常回头看看过去的历史，去欣赏那些经典的东西，通过古代美好的艺术瑰宝，让我们从喧嚣的现实生活中回归一种宁静。视频里古今有点紧张，无伤大雅，呵呵。</p>
-
-<p>&nbsp;</p>
-
-<p><object style="text-align: center; margin: 0px auto 10px; display: block;" width="480" height="418" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="src" value="http://player.youku.com/player.php/sid/XMTY2OTEzMDU2/v.swf" /><param name="autostart" value="undefined" /><param name="loop" value="loop" /><embed style="text-align: center; margin: 0px auto 10px; display: block;" width="480" height="418" type="application/x-shockwave-flash" src="http://player.youku.com/player.php/sid/XMTY2OTEzMDU2/v.swf" autostart="undefined" loop="loop" /></object></p>
-
-<p>U:Talk about this project&#8230;I think it&#8217;s very urgent,help pi ying,do you think so?<br />
-G:Yeah,I also think so.<br />
-U:In our minds,what should we look upon home without seeing only the technology?<br />
-G:I think I like you guys&#8217; project,because all this world today, so fast,all the people,all the high tech,how to be fast,how to be mordenized,and&#8230;but I said Let&#8217;s go back to the roots,to the low way.you got fast food,why fast food?let&#8217;s go to the low food,its all the same,enjoy the classical things,that&#8217;s the way.I like it.I like your way.</p>
-
-<p>用U代表我们，用G代表German Friend。</p>
-
-<p>来源：http://x-memo.blog.sohu.com/148977366.html</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/04/22/physics-helper-silverlight/">使用Physics Helper 做SilverLight小游戏</a></h1>
-    
-    
-      <p class="meta">
-        
+        <a class="basic-alignment right" href="/blog/2011/07/28/ineffable-shopping-guide-2/" title="Next Post: Ineffable Shopping Guide 结构化搜索技术介绍">Ineffable Shopping Guide 结构化搜索技术介绍 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-22T00:00:00+00:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近在做一个Silverlight的游戏，由于人物上面的关节需要进行活动，类似于在flash用骨骼工具，在SilverLight中没有类似的控件，找了很多东西都感觉实现得很不理想。后来发现了 codeproject上面的一个<a href="http://physicshelper.codeplex.com/">Physics Helper</a>的开源项目，它封装了Farseer的功能，并且它的使用方法非常简单，直接在Blend中就可以实现很好的动画效果，支持鼠标，重力等。下面是他的描述。
-<h3>Project Description</h3>
-The Physics Helper for Blend, Silverlight and WPF contains several Behaviors and controls which allow you to draw objects in Expression Blend 3, and have those objects translated directly into Physics objects using the <a href="http://www.codeplex.com/farseerphysics">Farseer Physics Engine</a>. This can be a great timesaver for creating games, as it is traditionally difficult to line up underlying physics bodies and geometries with your Blend artwork.</p>
-
-<p>demo演示地址    <a href="http://www.andybeaulieu.com/silverlight/3.0/physicshelper3/index.htm">http://www.andybeaulieu.com/silverlight/3.0/physicshelper3/index.htm</a>.</p>
-
-<p><a href="http://www.andybeaulieu.com/silverlight/3.0/physicshelper3/DemoBehaviors2TestPage.html"><img alt="Demo Behaviors 2" src="http://yanggang.me/images/daijun/wp-content/uploads/2013/05/demo4.png" border="0" /></a></p>
-
-<p>Rag Doll</p>
 </div>
-  
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -834,7 +312,7 @@ The Physics Helper for Blend, Silverlight and WPF contains several Behaviors and
       </li>
     
       <li class="post">
-        <a href="/blog/2011/10/10/childsearch-2010/">Childsearch&#8212;-2010腾讯校园之星作品</a>
+        <a href="/blog/2011/10/10/childsearch-2010/">Childsearch----2010腾讯校园之星作品</a>
       </li>
     
       <li class="post">
@@ -858,6 +336,7 @@ The Physics Helper for Blend, Silverlight and WPF contains several Behaviors and
 
   
 </aside>
+
 
     </div>
   </div>

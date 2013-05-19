@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>复试上机题 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Problems A.请写一个程序，判断给定整数序列能否构成等差数列
+输入说明：多组数据，每组输入数据由两行构成，第一行只有一个整数n（&lt;1000），表示序列长度（即序列中整数的个数，0表示输入结束），第二行为n个整数，每个整数的取值区间都为[-32768&#8212;-32767]， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://bohr.github.io/blog/2009/03/15/computer">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:bohr.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">复试上机题</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-15T00:00:00+00:00" pubdate data-updated="true">Mar 15<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><div class="t_msgfont" id="postmessage_54785">Problems A.请写一个程序，判断给定整数序列能否构成等差数列<br />
+输入说明：多组数据，每组输入数据由两行构成，第一行只有一个整数n（&lt;1000），表示序列长度（即序列中整数的个数，0表示输入结束），第二行为n个整数，每个整数的取值区间都为[-32768&#8212;-32767]，整数之间以空格或挑格间隔。<br />
+输出说明：对于每一组数据，输出一个yes或no，表示该序列能否构成等差数列。<br />
+输入样本：<br />
+6
+23 15 4 18 35 11<br />
+3
+3 1 2<br />
+0
+输出样本：<br />
+yes<br />
+noProblem B.判断给定正整数是不是“水仙花数”。“水仙花数”是指一个三位数，其各位数字的立方和等于该数，例如153=13+53+33。<br />
+输入说明：有多组数据，每组数据为一个正整数n（0&lt;n&lt;65536，占一行），为0时表示输入结束。<br />
+输出说明：对于每一组数据，输出一个yes或no（表示该数是否为“水仙花数”）。<br />
+输入样本：<br />
+153<br />
+111<br />
+370<br />
+422<br />
+0
+输出样本：<br />
+yes<br />
+no<br />
+yes<br />
+noProblem C. Arnold变换是一种常用的图像置乱技术，Arnold变换的定义如下：<br />
+对任意N*N矩阵（所有元素都相同的矩阵除外），设i，j为矩阵元素原始下标，经过Arnold变换后新下标为i&#8217;，j&#8217;，且满足下式：<br />
+i&#8217;=(i+j)mod N<br />
+j&#8217;=(i+2j)mod N<br />
+i,j:0,1,&#8230;&#8230;&#8230;N-1<br />
+Arnold变换具有周期性，即经过若干次变换后，矩阵回到最初状态，且周期T与N的大小有关。对于任意N&gt;2，TN&lt;=N2/2，请编写程序输出给定的N（2&lt;N&lt;=10）对应的周期TN。<br />
+输入说明：有多组数据，每组数据只有一个整数N（2&lt;N&lt;=10，占一行），为0时表示输入结束。<br />
+输出说明：对输入的每一N，给出N*N矩阵的Arnold变换的周期T。<br />
+输入样本：<br />
+3
+8<br />
+0
+输出样本：<br />
+4
+6</div></p>
+
+<p>Problem D.对于一个正整数n，如果它的各位之和等于它的所有质因数的各位之和，则该数被称为Smith数。例如，31257=3*3*23*151，31257的各位数字之和为3+1+2+5+7=18，它的所有质因数的各位数字之和为3+3+2+3+1+5+1=18，因此，31257是一个Smith数。编写一个程序判断输入的正整数是不是Smith数。<br />
+输入说明：有多组数据，每组数据只有一个整数n（&lt;100000，占一行），为0时表示输入结束。<br />
+输出说明：对于每一组数据，输出一个yes或no（表示该数是否为Smith数）。<br />
+输入样本：<br />
+31257<br />
+123<br />
+0
+输出样本：<br />
+yes<br />
+no</p>
+
+<p>Problem E. 请写一个程序，计算Rn精确结果（0.0&lt;R&lt;99.999,n是整数且0&lt;n&lt;=25)。<br />
+输入说明：有多组数据，每组数据占一行，用一对数据表示，第一个数据是R（含小数点共6位），第二个数据是n，两个数之间有一个空格。<br />
+输出说明：对每个输入输出其结果（占一行）<br />
+输入样本：<br />
+95.123   12<br />
+0.4321   20<br />
+6.7592   9<br />
+98.999   10<br />
+1.0100   12<br />
+输出样本：<br />
+548815620517731830194541.899025343415715973535967221869852721<br />
+.00000005148554641076956121994511276767154838481760200726351203835429763013462401<br />
+29448126.764121021618164430206909037173276672<br />
+90429072743629540498.107596019456651774561044010001<br />
+1.126825030131969720661201</p>
+
+<p></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-15T00:00:00+00:00" pubdate data-updated="true">Mar 15<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/bian-cheng/'>编程</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://bohr.github.io/blog/2009/03/15/computer/" data-via="" data-counturl="http://bohr.github.io/blog/2009/03/15/computer/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2009/03/06/see-sea/" title="Previous Post: 我们看海去">&laquo; 我们看海去</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2009/03/15/tired/" title="Next Post: 感觉好累">感觉好累 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/10/10/ineffable-shopping-guide/">Ineffable Shopping Guide 介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/10/10/childsearch-2010/">Childsearch----2010腾讯校园之星作品</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/28/ineffable-shopping-guide-2/">Ineffable Shopping Guide 结构化搜索技术介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/03/23/python-pcap/">利用Python来解析Pcap包</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/02/16/gdb-study/">GDB学习笔记</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

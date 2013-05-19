@@ -1,0 +1,1001 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="修改SQL语句,以前老以为数据库自动做好了优化工作,其实不然,在修改后的SQL语句,可以很快实现. &#8216;tSql=&#8221;select ArticleUrl,Title,NewsTime,Source from mynews where ID in (select distinct &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://bohr.github.io/blog/page/4">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:bohr.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/20/search/">今天搜索引擎备忘</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-20T00:00:00+00:00" pubdate data-updated="true">Apr 20<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>修改SQL语句,以前老以为数据库自动做好了优化工作,其实不然,在修改后的SQL语句,可以很快实现.</p>
+
+<p>&#8216;tSql=&#8221;select ArticleUrl,Title,NewsTime,Source from mynews where ID in (select distinct urlID from UrlWord where word=&#8217;&#8221;+ sKey +&#8221;&#8217;);&#8221;<br />
+tSql=&#8221; select ArticleUrl,Title,NewsTime ,Source from mynews where Title like  &#8216;%&#8221; + sKey +&#8221;%&#8217; Union   All  select ArticleUrl,Title,NewsTime,Source from mynews where ID in (select distinct urlID from UrlWord where word=&#8217;&#8221;+ sKey +&#8221;&#8217;);&#8221;</p>
+
+<p>利用游标来增加数据到mynews表中</p>
+
+<p>declare newsie_cur cursor<br />
+for<br />
+select ArticleUrl,Title,NewsTime from  newsie</p>
+
+<p>open newsie_cur<br />
+declare @ArticleUrl nvarchar(255),@Title nvarchar(255),@NewsTime datetime<br />
+fetch next from newsie_cur into @ArticleUrl,@Title,@NewsTime<br />
+while(@@fetch_status=0)<br />
+begin<br />
+fetch next from newsie_cur into @ArticleUrl,@Title,@NewsTime<br />
+insert into mynews(ArticleUrl,Title,NewsTime,Source) values( @ArticleUrl,@Title,@NewsTime,&#8217;信息工程学院&#8217;)<br />
+end</p>
+
+<p>close news_cur</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/16/4_16-asp-net2-0/">4_16 ASP.NET2.0学习</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-16T00:00:00+00:00" pubdate data-updated="true">Apr 16<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><h4>GridView控件的使用方法及练习</h4>
+1.不编写代码制作简单的数据编辑、显示、删除的页面。</p>
+
+<p>A。Web Config存储连接字符串的方法<br />
+见<a title="http://www.coolsdu.cn/pjblog/article.asp?id=36" href="http://www.coolsdu.cn/pjblog/article.asp?id=36">http://www.coolsdu.cn/pjblog/article.asp?id=36</a></p>
+
+<p>B。用GridView连接SqlDataSource，直接选择数据源即可。在代码中是</p>
+
+<p>&lt;asp:GridView ID=&#8221;GridView1&#8221; runat=&#8221;server&#8221; AutoGenerateColumns=&#8221;False&#8221; DataKeyNames=&#8221;UserID&#8221;<br />
+DataSourceID=&#8221;<strong>SqlDataSource1&#8221;</strong></p>
+
+<p>C。直接利用向导生成GridView的代码。</p>
+
+<p>D。右键显示智能标记可以看到启用分页，启用排序的选项。</p>
+
+<p><strong>GridView分页</strong></p>
+
+<p><em>当GridView的AllowPaging属性设置为True的时候，我们实现了分页，我们还可以对分页进行一些个性化的设置。常用的属性包括：PageIndex――设置数据显示的当前页面，默认是0，也就是数据的首页。PageSize ――也就是一页显示多少条记录，默认为10条。在PagerSettings中，还可以对分页的导航按钮进行详细设置，在Mode属性中，可以设置：Numeric――默认的，分页用数字表示，1，2，3……。NextPrevious、NextPreviousFirstLast、NumericFirstLast均可顾名思义，显示上一页、下一页、首页、末页等。当Mode设定不是Numeric时，那么可以通过设定FirstPageText、LastPageText等属性来实现分页导航时，到首页、末页、下页、上页时显示的文字提示。<br />
+如果想实现分页界面的完全自动控制，还可以点击GridView右键，选择编辑模版－PagerTemplate来实现，在模版中加入若干个Button控件，然后将Button控件的CommandName属性设置为Page,将CommandArgument属性分别设置为First、Last、Prev、Next或者一个数字，即可实现分页操作。</em></p>
+
+<p><strong>GridView中的编辑、删除、排序</strong></p>
+
+<p>与分页类似，直接在显示智能标记中有启用编辑，启用删除（必须是对应的<strong>SqlDataSource1有</strong>DeleteCommand、UpdateCommand）</p>
+
+<p><strong>GridView中的自定义列</strong></p>
+
+<p>我们现在假设有一个表，其中有一个字段是username，我们现在产生一个自定义列，自定义列中包括一个操作，删除此用户。我们首先右键点击GridView，在智能标记中，选择编辑列，添加一个模版列，然后编辑模版中的ItemTemplate，加入一个ImageButton控件，点击该控件即可修改ImageUrl、AlternateText、CommandArgument、CommandName。<br />
+其中ImageUrl&#8212;图像的URL  AlternateText&#8212;相当于alt   CommandName&#8211;按钮的名字 CommandArgument&#8211;该按钮的参数<br />
+在这里把这个参数绑定到 UserID。绑定方法：CommandArgument=&#8217;&lt;%# DataBinder.Eval(Container.DataItem,&#8221;UserID&#8221;) %&gt;&#8217;。如果单向绑定，一般采用Eval，也就是说数值只从数据源传到页面上，如果双向绑定，也就是采用Bind的话，对数据的修改可以回传到数据源之中。</p>
+
+<p>&lt;asp:TemplateField HeaderText=&#8221;操作&#8221;&gt;<br />
+&lt;ItemTemplate&gt;<br />
+&lt;asp:ImageButton id=&#8221;deleteBtn&#8221; ImageUrl=&#8221;~/images/delete.gif&#8221; AlternateText=&#8221;删除此项&#8221; runat=&#8221;server&#8221;  CommandName=&#8221;delete&#8221; CommandArgument=&#8217;&lt;%# DataBinder.Eval(Container.DataItem,&#8221;UserID&#8221;) %&gt;&#8217; /&gt;&lt;/ItemTemplate&gt;<br />
+&lt;ItemStyle Width=&#8221;300px&#8221; BorderWidth=&#8221;1px&#8221; HorizontalAlign=&#8221;Center&#8221; /&gt;<br />
+&lt;HeaderStyle HorizontalAlign=&#8221;Center&#8221; /&gt;<br />
+&lt;/asp:TemplateField&gt;</p>
+
+<p><strong>GridView中的RowDataBound事件</strong></p>
+
+<p><em>在创建gridView控件时，必须先为GridView的每一行创建一个GridViewRow对象，创建每一行时，将引发一个RowCreated事件；当行创建完毕，每一行GridViewRow就要绑定数据源中的数据，当绑定完成后，将引发RowDataBound事件。如果说我们可以利用RowCreated事件来控制每一行绑定的控件，那么我们同样可以利用RowDataBound事件来控制每一行绑定的数据，也就是让数据如何呈现给大家。
+</em>在这里点击这个删除图片后，一般弹出一个对话框，这就需要没一行的图片都需要添加这样的javascript，</p>
+
+<p>protected void UserView_RowDataBound(object sender, GridViewRowEventArgs e)<br />
+{</p>
+
+<p>///找到删除按钮<br />
+ImageButton deleteBtn = (ImageButton)e.Row.FindControl(&#8220;DeleteBtn&#8221;);<br />
+if (deleteBtn != null)<br />
+{
+///添加删除确认对话框<br />
+deleteBtn.Attributes.Add(&#8220;onclick&#8221;, &#8220;return confirm(&#8216;你确定要删除所选择的数据项吗？&#8217;);&#8221;);<br />
+}</p>
+
+<p>}</p>
+
+<p><strong>GridView中的RowCommand事件</strong></p>
+
+<p>在点击这个删除图片按钮后就会触发一个RowCommand。在设置删除图片按钮有这两个CommandArgument、CommandName参数，这里就用得到了。
+<blockquote>protected void UserView_RowCommand(object sender, GridViewCommandEventArgs e)<br />
+{
+if (<strong>e.CommandName</strong> == &#8220;delete&#8221;)<br />
+{
+///删除数据<br />
+User user = new User();               //这里是后台代码,删除用户的类,未实现<br />
+user.delUser(Int32.Parse(<strong>e.CommandArgument</strong>.ToString()));</blockquote>
+///重新绑定控件的数据<br />
+BindUserData();<br />
+Response.Write(&#8220;&lt;script&gt;alert(&#8216;&#8221; + &#8220;删除数据成功，请妥善保管好你的数据！&#8221; + &#8220;&#8217;);&lt;/script&gt;&#8221;);<br />
+}
+}</p>
+
+<p>&nbsp;</p>
+
+<p>作业:参考上面的制作方法,制作一个类似的用户管理的页面（主要是那个删除图片按钮）,可以扩充功能。</p>
+
+<p>参考页面：</p>
+
+<p><a href="http://www.coolsdu.cn/PJblog/attachments/month_0804/12008416194154.png"><img style="border: 0px;" alt="image" src="http://yanggang.me/images/daijun/wp-content/uploads/2013/05/i2008416194154.png" width="576" height="236" border="0" /></a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/14/4_144_20-study/">4_14~4_20学习大纲</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-14T00:00:00+00:00" pubdate data-updated="true">Apr 14<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一、SqlDataSource控件的使用方法及练习</p>
+
+<p>1.Web Config存储连接字符串的方法</p>
+
+<p>2.简单sql语句进行的数据绑定.</p>
+
+<p>练习1.利用DatailsView与SqldataSource实现[编辑][删除]等.编写代码与不编写代码两种方式.</p>
+
+<p>练习2.在Sqldatasource中使用Parameter类来表示一个任意的参数值.ControlParameter表示控件值或页面属性值.</p>
+
+<p>3.简单介绍FormView、GridView、DetailsView、DropListView控件</p>
+
+<p>二、详细介绍GridView控件的使用方法</p>
+
+<p>1.分页、编辑、排序</p>
+
+<p>2.模板、按钮</p>
+
+<p>3.图片按钮</p>
+
+<p>实例1.用户管理系统中的用户管理列表</p>
+
+<p>三、采用数据库编程方式实现数据的绑定与更新</p>
+
+<p>1.普通单类结构的代码编写</p>
+
+<p>2.连接数据库类的使用方法</p>
+
+<p>实例：将用户管理系统的用户管理列表采用单类结构进行改写</p>
+
+<p>四、SQL语句的简介</p>
+
+<p>1.简单查询与子查询的使用</p>
+
+<p>2.存储过程，游标的使用</p>
+
+<p>实例：编写查询用户信息、审核用户、检验用户的存储过程，并进行测试。</p>
+
+<p>五、三层ASP.Net2.0架构的代码编写.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/14/4_14-asp-net/">4_14 ASP.NET学习总结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-14T00:00:00+00:00" pubdate data-updated="true">Apr 14<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>SqlDataSource控件的使用方法及练习</p>
+
+<p>1.Web Config存储连接字符串的方法</p>
+
+<p>主要代码:</p>
+
+<p>在web.config中</p>
+
+<p>&lt;connectionStrings&gt;<br />
+&lt;!&#8211;链接SQL Server数据库的链接字符串&#8211;&gt;<br />
+&lt;add name=&#8221;SQLCONNECTIONSTRING&#8221; connectionString=&#8221;data Source=127.0.0.1;database=ShareWeb;user id=sa;pwd=dai&#8221; providerName=&#8221;System.Data.SqlClient&#8221;&gt;&lt;/add&gt;<br />
+&lt;/connectionStrings&gt;</p>
+
+<p>在页面中default.aspx
+<blockquote>&lt;asp:SqlDataSource ID=&#8221;SqlDataSource1&#8221; runat=&#8221;server&#8221; ConnectionString=&#8221;&lt;%$ ConnectionStrings:SQLCONNECTIONSTRING %&gt;&#8221;<br />
+SelectCommand=&#8221;Select [DepartmentID], [DepartmentName] FROM [Department]&#8221;&gt;<br />
+&lt;/asp:SqlDataSource&gt;</blockquote>
+在程序中调用这个连接字符串</p>
+
+<p>//读取web.config文件<br />
+connStr = WebConfigurationManager.ConnectionStrings[&#8220;SQLCONNECTIONSTRING&#8221;].ConnectionString;</p>
+
+<p>//打开数据库连接<br />
+conn = new SqlConnection(connStr);<br />
+conn.Open();</p>
+
+<p>2.简单sql语句进行的数据绑定.</p>
+
+<p>练习1.利用DatailsView与SqldataSource实现[编辑][删除]等.不编写代码.直接用控件拖动.</p>
+
+<p>样本:<a title="http://www.coolsdu.cn/4_14_test/Default2.aspx" href="http://www.coolsdu.cn/4_14_test/Default2.aspx">http://www.coolsdu.cn/4_14_test/Default2.aspx</a></p>
+
+<p>练习2.在Sqldatasource中使用Parameter类来表示一个任意的参数值.ControlParameter表示控件值或页面属性值.</p>
+
+<p>制作一个简易的留言板,可以显示IP和日期.参考示例:<a title="http://www.coolsdu.cn/4_14_test/Default3.aspx" href="http://www.coolsdu.cn/4_14_test/Default3.aspx">http://www.coolsdu.cn/4_14_test/Default3.aspx</a></p>
+
+<p>关键代码:</p>
+
+<p>在default3.aspx中<br />
+InsertCommand=&#8221;Insert INTO [lyb] (  [Content], [Name],[IP]) VALUES (  @Content, @Name,@IP)&#8221;<br />
+SelectCommand=&#8221;Select [ID], [IP], [Content], [EntryData], [Name] FROM [lyb]&#8221;  &gt;<br />
+&lt;InsertParameters&gt;<br />
+&lt;asp:Parameter Name=&#8221;Content&#8221; /&gt;<br />
+&lt;asp:Parameter Name=&#8221;Name&#8221; /&gt;</p>
+
+<p>&lt;asp:ControlParameter Name=&#8221;IP&#8221;  ControlID=&#8221;__page&#8221; PropertyName=&#8221;IP&#8221;/&gt;</p>
+
+<p>&lt;/InsertParameters&gt;<br />
+在default3.aspx.cs中</p>
+
+<p>public string IP<br />
+{
+get<br />
+{
+return Request.UserHostAddress;<br />
+}
+}</p>
+
+<p>&nbsp;</p>
+
+<p>其中显示IP功能:</p>
+
+<p>注意：控件参数的ControlID属性值为_page，这个值为Page类自动生成的ID。而PropertName属性的值为IP，这个值在同一页面中定义的。</p>
+
+<p>作业:参考简易的留言板,制作一个类似可以显示时间和IP的留言板,可以扩充功能.(当前状态:<strong><span style="color: #ff0000;">未完成</span></strong>)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/11/java-food/">宋建邦之java售饭机之有限状态机</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-11T00:00:00+00:00" pubdate data-updated="true">Apr 11<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><pre class="csharpcode"><span class="rem">// TODO 自动生成方法存根</span>
+<span class="kwrd">if</span> (!bInsert)
+<span class="kwrd">return</span>;
+<span class="kwrd">if</span>(sum+temp*100 &gt; 100000)
+<span class="kwrd">return</span>;
+String command = e.getActionCommand();
+System.<span class="kwrd">out</span>.println(command);
+<span class="kwrd">switch</span> (status) {
+<span class="kwrd">case</span> S_INIT:
+<span class="kwrd">case</span> S_ADD:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+temp = temp * 10 + Integer.parseInt(command);
+<span class="kwrd">break</span>;
+}
+sum += temp*100;
+temp = 0;
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+status = S_SUB;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"."</span>) {
+dec = <span class="str">"0."</span>;
+status = S_ADD_POINT;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">case</span> S_SUB:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+temp = temp * 10 - Integer.parseInt(command);
+<span class="kwrd">break</span>;
+}
+sum += temp*100;
+temp = 0;
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+status = S_ADD;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"."</span>) {
+dec = <span class="str">"-0."</span>;
+status = S_SUB_POINT;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">case</span> S_ADD_POINT:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+<span class="kwrd">if</span>(dec.length() &gt;= 4)
+<span class="kwrd">break</span>;
+dec += command;
+<span class="kwrd">break</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_ADD;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_SUB;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">break</span>;
+<span class="kwrd">case</span> S_SUB_POINT:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+<span class="kwrd">if</span>(dec.length() &gt;= 5)
+<span class="kwrd">break</span>;
+dec += command;
+<span class="kwrd">break</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_ADD;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_SUB;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">break</span>;
+}
+<span class="kwrd">int</span> t = 0;
+<span class="kwrd">if</span> (dec != <span class="kwrd">null</span>){
+String str = String.valueOf((Double.parseDouble(dec)*100));
+t = (sum + temp *100+Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>))));
+<span class="kwrd">if</span>(balance - t &lt; 0||t&lt;0){
+JOptionPane.showMessageDialog(<span class="kwrd">this</span>, <span class="str">"余额不足!"</span>);
+reset();
+sCurrent.display(0);
+sBalance.display(balance);
+<span class="kwrd">return</span>;
+}
+sCurrent.display(t);
+sBalance.display(balance - t);
+}
+<span class="kwrd">else</span>{
+t = sum + temp * 100;
+<span class="kwrd">if</span>(balance - t &lt; 0 || t&lt;0){
+JOptionPane.showMessageDialog(<span class="kwrd">this</span>, <span class="str">"余额不足!"</span>);
+reset();
+sCurrent.display(0);
+sBalance.display(balance);
+<span class="kwrd">return</span>;
+}
+sCurrent.display(t);
+sBalance.display(balance - t);
+}</pre>
+<style type="text/css"><!--<br>
+.csharpcode, .csharpcode pre<br>
+{
+font-size: small;<br>
+color: black;<br>
+font-family: consolas, &#8220;Courier New&#8221;, courier, monospace;<br>
+background-color: #ffffff;<br>
+/*white-space: pre;*/<br>
+}
+.csharpcode pre { margin: 0em; }<br>
+.csharpcode .rem { color: #008000; }<br>
+.csharpcode .kwrd { color: #0000ff; }<br>
+.csharpcode .str { color: #006080; }<br>
+.csharpcode .op { color: #0000c0; }<br>
+.csharpcode .preproc { color: #cc6633; }<br>
+.csharpcode .asp { background-color: #ffff00; }<br>
+.csharpcode .html { color: #800000; }<br>
+.csharpcode .attr { color: #ff0000; }<br>
+.csharpcode .alt<br>
+{
+background-color: #f4f4f4;<br>
+width: 100%;<br>
+margin: 0em;<br>
+}
+.csharpcode .lnum { color: #606060; }<br>
+&#8211;></style></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/08/c-winform/">C# 的winform中使用数据库连接字符串</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-08T00:00:00+00:00" pubdate data-updated="true">Apr 8<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在解决方案中增加一窗口选择xml文件，并将名称改为app.config.其内容设置如下：<br />
+&lt;?xml version=&#8221;1.0&#8221; encoding=&#8221;utf-8&#8221;?&gt;<br />
+&lt;configuration&gt;<br />
+&lt;appSettings&gt;<br />
+&lt;add key=&#8221;source&#8221; value=&#8221;Server=localhost;uid=sa;pwd=&#8217;fang&#8217;;database=khgx;&#8221; /&gt;<br />
+&lt;/appSettings&gt;<br />
+&lt;/configuration&gt;<br />
+请在引用中添加-System.configuration不然程序会提示错误。在程序中就可以这样调用：<br />
+private string source = System.Configuration.ConfigurationManager.AppSettings[&#8220;source&#8221;];<br />
+conn = new SqlConnection(source);<br />
+打包安装后，可以直在安装的机器上面接修改配置文件，进行数据库连接。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/02/winform/">Winform程序中如何在点击重启按钮后注销本程序所有的资源并且重新加载窗口？</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-02T00:00:00+00:00" pubdate data-updated="true">Apr 2<span>nd</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>winform<strong>程序</strong>中如何在点击<strong>重</strong>启按钮后注销本<strong>程序</strong>所有的资源并且重新加载窗口？</p>
+
+<p>Process   newprocess   =new   Process();<br />
+newprocess.StartInfo.FileName=&#8221;<strong>程序</strong>名字&#8221;;<br />
+newprocess.Start();<br />
+Application.Exit();<br />
+其中   &#8221;<strong>程序</strong>名字&#8221;   使用您的主输出文件的名字，如：   test.exe   即可</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/02/4_2-asp-net/">4_2 asp.net初级(一)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-02T00:00:00+00:00" pubdate data-updated="true">Apr 2<span>nd</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>protected void ImageButton1_Click(object sender, ImageClickEventArgs e)<br />
+第一个参数是名叫sender的object参数，表示引发事件的控件，表示点击的那个按钮<br />
+第二个参数是名叫e的EventArgs用于表示附加的事件关联的事件信息。只要第二个参数不是默认的EventArgs</p>
+
+<p>参数，就可以知道一定有附加的事件信息传给了处理程序。</p>
+
+<p>Page类包含IsPostBack属性，该属性用于检测页面是否已经回传给服务器端。<br />
+==========admin文件夹/web.config=======================<br />
+&lt;?xml version=&#8221;1.0&#8221; encoding=&#8221;utf-8&#8221;?&gt;<br />
+&lt;configuration xmlns=&#8221;<a href="http://schemas.microsoft.com/.NetConfiguration/v2.0">http://schemas.microsoft.com/.NetConfiguration/v2.0&#8221;</a>&gt;<br />
+&lt;system.web&gt;<br />
+&lt;authorization&gt;<br />
+&lt;deny users=&#8221;?&#8221; /&gt;<br />
+&lt;/authorization&gt;<br />
+&lt;/system.web&gt;<br />
+&lt;/configuration&gt;<br />
+===========================================<br />
+首页web.config</p>
+
+<p>&lt;authentication mode=&#8221;Forms&#8221;&gt;<br />
+&lt;forms name=&#8221;AdminCookie&#8221; loginUrl=&#8221;Default2.aspx&#8221; /&gt;<br />
+&lt;/authentication&gt;</p>
+
+<p>============================Default2.aspx=================<br />
+验证成功后<br />
+System.Web.Security.FormsAuthentication.SetAuthCookie(username.Text.ToString(), false);</p>
+
+<p>====================================安全退出====<br />
+System.Web.Security.FormsAuthentication.SignOut();</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2007/10/27/search-crawler/">用C#写的垂直搜索之爬虫</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-10-27T00:00:00+00:00" pubdate data-updated="true">Oct 27<span>th</span>, 2007</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>搞垂直搜索搞了这么写天,现在已经把我们学院的网页爬完了,非常快,时间不超过30s.</p>
+
+<p><img alt="" src="http://yanggang.me/images/daijun/wp-content/uploads/2013/05/large_5179o177.jpg" border="0" />
+<img alt="" src="http://www.cnblogs.com/images/cnblogs_com/donepuzzle/large_5215n177.jpg" border="0" />
+<img alt="" src="http://www.cnblogs.com/images/cnblogs_com/donepuzzle/large_5278h177.jpg" border="0" />
+<img alt="" src="http://www.cnblogs.com/images/cnblogs_com/donepuzzle/large_5303c177.jpg" border="0" />
+<div style="padding-right: 5px; padding-left: 4px; font-size: 13px; padding-bottom: 4px; width: 98%; word-break: break-all; padding-top: 4px; background-color: #eeeeee; border: #cccccc 1px solid;"><span style="color: #008080;">  1</span><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /><span style="color: #0000ff;">using</span><span style="color: #000000;"> System;
+</span><span style="color: #008080;">  2</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff;">using</span><span style="color: #000000;"> System.Collections.Generic;
+</span><span style="color: #008080;">  3</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff;">using</span><span style="color: #000000;"> System.ComponentModel;
+</span><span style="color: #008080;">  4</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff;">using</span><span style="color: #000000;"> System.Data;
+</span><span style="color: #008080;">  5</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff;">using</span><span style="color: #000000;"> System.Drawing;
+</span><span style="color: #008080;">  6</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff;">using</span><span style="color: #000000;"> System.Text;
+</span><span style="color: #008080;">  7</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff;">using</span><span style="color: #000000;"> System.Windows.Forms;
+</span><span style="color: #008080;">  8</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff;">using</span><span style="color: #000000;"> System.Web.Security;
+</span><span style="color: #008080;">  9</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff;">using</span><span style="color: #000000;"> System.IO;
+</span><span style="color: #008080;"> 10</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff;">using</span><span style="color: #000000;"> System.Net;
+</span><span style="color: #008080;"> 11</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff;">using</span><span style="color: #000000;"> System.Text.RegularExpressions;
+</span><span style="color: #008080;"> 12</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" />
+</span><span style="color: #008080;"> 13</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff;">namespace</span><span style="color: #000000;"> ie
+</span><span style="color: #008080;"> 14</span><span style="color: #000000;"><img id="Codehighlighter1_279_4619_Open_Image" onclick="this.style.display='none'; Codehighlighter1_279_4619_Open_Text.style.display='none'; Codehighlighter1_279_4619_Closed_Image.style.display='inline'; Codehighlighter1_279_4619_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedBlockStart.gif" align="top" /><img id="Codehighlighter1_279_4619_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_279_4619_Closed_Text.style.display='none'; Codehighlighter1_279_4619_Open_Image.style.display='inline'; Codehighlighter1_279_4619_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedBlock.gif" align="top" /></span><span id="Codehighlighter1_279_4619_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_279_4619_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 15</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />    </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> partial </span><span style="color: #0000ff;">class</span><span style="color: #000000;"> Form1 : Form
+</span><span style="color: #008080;"> 16</span><span style="color: #000000;"><img id="Codehighlighter1_323_4617_Open_Image" onclick="this.style.display='none'; Codehighlighter1_323_4617_Open_Text.style.display='none'; Codehighlighter1_323_4617_Closed_Image.style.display='inline'; Codehighlighter1_323_4617_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_323_4617_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_323_4617_Closed_Text.style.display='none'; Codehighlighter1_323_4617_Open_Image.style.display='inline'; Codehighlighter1_323_4617_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />    </span><span id="Codehighlighter1_323_4617_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_323_4617_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 17</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />        </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> Form1()
+</span><span style="color: #008080;"> 18</span><span style="color: #000000;"><img id="Codehighlighter1_356_402_Open_Image" onclick="this.style.display='none'; Codehighlighter1_356_402_Open_Text.style.display='none'; Codehighlighter1_356_402_Closed_Image.style.display='inline'; Codehighlighter1_356_402_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_356_402_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_356_402_Closed_Text.style.display='none'; Codehighlighter1_356_402_Open_Image.style.display='inline'; Codehighlighter1_356_402_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />        </span><span id="Codehighlighter1_356_402_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_356_402_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 19</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />            InitializeComponent();
+</span><span style="color: #008080;"> 20</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;"> 21</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />        }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;"> 22</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;"> 23</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />        </span><span style="color: #0000ff;">private</span><span style="color: #000000;"> </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> button1_Click(</span><span style="color: #0000ff;">object</span><span style="color: #000000;"> sender, EventArgs e)
+</span><span style="color: #008080;"> 24</span><span style="color: #000000;"><img id="Codehighlighter1_476_1045_Open_Image" onclick="this.style.display='none'; Codehighlighter1_476_1045_Open_Text.style.display='none'; Codehighlighter1_476_1045_Closed_Image.style.display='inline'; Codehighlighter1_476_1045_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_476_1045_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_476_1045_Closed_Text.style.display='none'; Codehighlighter1_476_1045_Open_Image.style.display='inline'; Codehighlighter1_476_1045_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />        </span><span id="Codehighlighter1_476_1045_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_476_1045_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 25</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;"> 26</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />            </span><span style="color: #0000ff;">for</span><span style="color: #000000;"> (Int32 i </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #000000;">100</span><span style="color: #000000;">; i </span><span style="color: #000000;">&lt;=</span><span style="color: #000000;"> </span><span style="color: #000000;">1750</span><span style="color: #000000;">; i</span><span style="color: #000000;">++</span><span style="color: #000000;">)
+</span><span style="color: #008080;"> 27</span><span style="color: #000000;"><img id="Codehighlighter1_539_999_Open_Image" onclick="this.style.display='none'; Codehighlighter1_539_999_Open_Text.style.display='none'; Codehighlighter1_539_999_Closed_Image.style.display='inline'; Codehighlighter1_539_999_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_539_999_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_539_999_Closed_Text.style.display='none'; Codehighlighter1_539_999_Open_Image.style.display='inline'; Codehighlighter1_539_999_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />            </span><span id="Codehighlighter1_539_999_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_539_999_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 28</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                String ii </span><span style="color: #000000;">=</span><span style="color: #000000;"> i.ToString();
+</span><span style="color: #008080;"> 29</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;"> 30</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> strmd5 </span><span style="color: #000000;">=</span><span style="color: #000000;"> FormsAuthentication.HashPasswordForStoringInConfigFile(ii, </span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">md5</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 31</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> x </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">http://ie.wh.sdu.edu.cn/show.</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;"> </span><span style="color: #000000;">+</span><span style="color: #000000;"> strmd5 </span><span style="color: #000000;">+</span><span style="color: #000000;"> </span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">.ie</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 32</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                readText read </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #0000ff;">new</span><span style="color: #000000;"> readText();
+</span><span style="color: #008080;"> 33</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                read.setUrl(x);
+</span><span style="color: #008080;"> 34</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> (read.equalS() </span><span style="color: #000000;">==</span><span style="color: #000000;"> </span><span style="color: #000000;">0</span><span style="color: #000000;">) </span><span style="color: #0000ff;">continue</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 35</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+</span><span style="color: #008080;"> 36</span><span style="color: #000000;"><img id="Codehighlighter1_927_985_Open_Image" onclick="this.style.display='none'; Codehighlighter1_927_985_Open_Text.style.display='none'; Codehighlighter1_927_985_Closed_Image.style.display='inline'; Codehighlighter1_927_985_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_927_985_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_927_985_Closed_Text.style.display='none'; Codehighlighter1_927_985_Open_Image.style.display='inline'; Codehighlighter1_927_985_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />                </span><span id="Codehighlighter1_927_985_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_927_985_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 37</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                    read.writeText(ii);
+</span><span style="color: #008080;"> 38</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />                }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;"> 39</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />            }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;"> 40</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />            MessageBox.Show(</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">完成!</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 41</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />        }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;"> 42</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />        </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> </span><span style="color: #0000ff;">class</span><span style="color: #000000;"> readText
+</span><span style="color: #008080;"> 43</span><span style="color: #000000;"><img id="Codehighlighter1_1085_4609_Open_Image" onclick="this.style.display='none'; Codehighlighter1_1085_4609_Open_Text.style.display='none'; Codehighlighter1_1085_4609_Closed_Image.style.display='inline'; Codehighlighter1_1085_4609_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_1085_4609_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_1085_4609_Closed_Text.style.display='none'; Codehighlighter1_1085_4609_Open_Image.style.display='inline'; Codehighlighter1_1085_4609_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />        </span><span id="Codehighlighter1_1085_4609_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_1085_4609_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 44</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />            </span><span style="color: #0000ff;">private</span><span style="color: #000000;"> </span><span style="color: #0000ff;">string</span><span style="color: #000000;">[] text;
+</span><span style="color: #008080;"> 45</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />            </span><span style="color: #0000ff;">private</span><span style="color: #000000;"> </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> url;
+</span><span style="color: #008080;"> 46</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />            </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> readText()
+</span><span style="color: #008080;"> 47</span><span style="color: #000000;"><img id="Codehighlighter1_1196_1353_Open_Image" onclick="this.style.display='none'; Codehighlighter1_1196_1353_Open_Text.style.display='none'; Codehighlighter1_1196_1353_Closed_Image.style.display='inline'; Codehighlighter1_1196_1353_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_1196_1353_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_1196_1353_Closed_Text.style.display='none'; Codehighlighter1_1196_1353_Open_Image.style.display='inline'; Codehighlighter1_1196_1353_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />            </span><span id="Codehighlighter1_1196_1353_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_1196_1353_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 48</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                text </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #0000ff;">new</span><span style="color: #000000;"> </span><span style="color: #0000ff;">string</span><span style="color: #000000;">[</span><span style="color: #000000;">6</span><span style="color: #000000;">];
+</span><span style="color: #008080;"> 49</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">for</span><span style="color: #000000;"> (</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> i </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #000000;">0</span><span style="color: #000000;">; i </span><span style="color: #000000;">&lt;=</span><span style="color: #000000;"> </span><span style="color: #000000;">5</span><span style="color: #000000;">; i</span><span style="color: #000000;">++</span><span style="color: #000000;">)
+</span><span style="color: #008080;"> 50</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                    text[i] </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #000000;">&#8221;&#8221;</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 51</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                url </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #000000;">&#8221;&#8221;</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 52</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />            }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;"> 53</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />            </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> setUrl(</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> urr)
+</span><span style="color: #008080;"> 54</span><span style="color: #000000;"><img id="Codehighlighter1_1410_1452_Open_Image" onclick="this.style.display='none'; Codehighlighter1_1410_1452_Open_Text.style.display='none'; Codehighlighter1_1410_1452_Closed_Image.style.display='inline'; Codehighlighter1_1410_1452_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_1410_1452_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_1410_1452_Closed_Text.style.display='none'; Codehighlighter1_1410_1452_Open_Image.style.display='inline'; Codehighlighter1_1410_1452_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />            </span><span id="Codehighlighter1_1410_1452_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_1410_1452_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 55</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;"> 56</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                url </span><span style="color: #000000;">=</span><span style="color: #000000;"> urr;
+</span><span style="color: #008080;"> 57</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />            }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;"> 58</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;"> 59</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />            </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> equalS()
+</span><span style="color: #008080;"> 60</span><span style="color: #000000;"><img id="Codehighlighter1_1499_1809_Open_Image" onclick="this.style.display='none'; Codehighlighter1_1499_1809_Open_Text.style.display='none'; Codehighlighter1_1499_1809_Closed_Image.style.display='inline'; Codehighlighter1_1499_1809_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_1499_1809_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_1499_1809_Closed_Text.style.display='none'; Codehighlighter1_1499_1809_Open_Image.style.display='inline'; Codehighlighter1_1499_1809_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />            </span><span id="Codehighlighter1_1499_1809_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_1499_1809_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 61</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> x </span><span style="color: #000000;">=</span><span style="color: #000000;"> read();
+</span><span style="color: #008080;"> 62</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> (x </span><span style="color: #000000;">==</span><span style="color: #000000;"> </span><span style="color: #000000;">-</span><span style="color: #000000;">1</span><span style="color: #000000;">) </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> </span><span style="color: #000000;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 63</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">for</span><span style="color: #000000;"> (</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> i </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #000000;">0</span><span style="color: #000000;">; i </span><span style="color: #000000;">&lt;</span><span style="color: #000000;"> </span><span style="color: #000000;">5</span><span style="color: #000000;">; i</span><span style="color: #000000;">++</span><span style="color: #000000;">)
+</span><span style="color: #008080;"> 64</span><span style="color: #000000;"><img id="Codehighlighter1_1632_1769_Open_Image" onclick="this.style.display='none'; Codehighlighter1_1632_1769_Open_Text.style.display='none'; Codehighlighter1_1632_1769_Closed_Image.style.display='inline'; Codehighlighter1_1632_1769_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_1632_1769_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_1632_1769_Closed_Text.style.display='none'; Codehighlighter1_1632_1769_Open_Image.style.display='inline'; Codehighlighter1_1632_1769_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />                </span><span id="Codehighlighter1_1632_1769_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_1632_1769_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 65</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> s </span><span style="color: #000000;">=</span><span style="color: #000000;"> text[i];
+</span><span style="color: #008080;"> 66</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                    </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> (s.Trim().Equals(</span><span style="color: #000000;">&#8221;&#8221;</span><span style="color: #000000;">))
+</span><span style="color: #008080;"> 67</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> </span><span style="color: #000000;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 68</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />                }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;"> 69</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> </span><span style="color: #000000;">1</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 70</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />            }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;"> 71</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;"> 72</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;"> 73</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />            </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> writeText(String str)
+</span><span style="color: #008080;"> 74</span><span style="color: #000000;"><img id="Codehighlighter1_1871_2278_Open_Image" onclick="this.style.display='none'; Codehighlighter1_1871_2278_Open_Text.style.display='none'; Codehighlighter1_1871_2278_Closed_Image.style.display='inline'; Codehighlighter1_1871_2278_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_1871_2278_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_1871_2278_Closed_Text.style.display='none'; Codehighlighter1_1871_2278_Open_Image.style.display='inline'; Codehighlighter1_1871_2278_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />            </span><span id="Codehighlighter1_1871_2278_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_1871_2278_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 75</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;"> 76</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> s </span><span style="color: #000000;">=</span><span style="color: #000000;"> url </span><span style="color: #000000;">+</span><span style="color: #000000;"> </span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">rn</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 77</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">for</span><span style="color: #000000;"> (</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> i </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #000000;">0</span><span style="color: #000000;">; i </span><span style="color: #000000;">&lt;=</span><span style="color: #000000;"> </span><span style="color: #000000;">5</span><span style="color: #000000;">; i</span><span style="color: #000000;">++</span><span style="color: #000000;">)
+</span><span style="color: #008080;"> 78</span><span style="color: #000000;"><img id="Codehighlighter1_1978_2044_Open_Image" onclick="this.style.display='none'; Codehighlighter1_1978_2044_Open_Text.style.display='none'; Codehighlighter1_1978_2044_Closed_Image.style.display='inline'; Codehighlighter1_1978_2044_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_1978_2044_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_1978_2044_Closed_Text.style.display='none'; Codehighlighter1_1978_2044_Open_Image.style.display='inline'; Codehighlighter1_1978_2044_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />                </span><span id="Codehighlighter1_1978_2044_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_1978_2044_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 79</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                    s </span><span style="color: #000000;">=</span><span style="color: #000000;"> s </span><span style="color: #000000;">+</span><span style="color: #000000;"> text[i] </span><span style="color: #000000;">+</span><span style="color: #000000;"> </span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">rn</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 80</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />                }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;"> 81</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> ss </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">d:ie</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;"> </span><span style="color: #000000;">+</span><span style="color: #000000;"> str </span><span style="color: #000000;">+</span><span style="color: #000000;"> </span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">.txt</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 82</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> (</span><span style="color: #000000;">!</span><span style="color: #000000;">Directory.Exists(</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">d:ie</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">))
+</span><span style="color: #008080;"> 83</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                    Directory.CreateDirectory(</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">d:ie</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 84</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                File.AppendAllText(ss, s);
+</span><span style="color: #008080;"> 85</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />            }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;"> 86</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />            </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> read()
+</span><span style="color: #008080;"> 87</span><span style="color: #000000;"><img id="Codehighlighter1_2322_3024_Open_Image" onclick="this.style.display='none'; Codehighlighter1_2322_3024_Open_Text.style.display='none'; Codehighlighter1_2322_3024_Closed_Image.style.display='inline'; Codehighlighter1_2322_3024_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_2322_3024_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_2322_3024_Closed_Text.style.display='none'; Codehighlighter1_2322_3024_Open_Image.style.display='inline'; Codehighlighter1_2322_3024_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />            </span><span id="Codehighlighter1_2322_3024_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_2322_3024_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 88</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;"> 89</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> sss;
+</span><span style="color: #008080;"> 90</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                WebRequest wreq </span><span style="color: #000000;">=</span><span style="color: #000000;"> WebRequest.Create(url);</span><span style="color: #008000;">//</span><span style="color: #008000;">_url是字符串，代表要得到的网页。</span><span style="color: #008000;">
+</span><span style="color: #008080;"> 91</span><span style="color: #008000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" /></span><span style="color: #000000;">                WebResponse wres </span><span style="color: #000000;">=</span><span style="color: #000000;"> wreq.GetResponse();
+</span><span style="color: #008080;"> 92</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                Stream stream </span><span style="color: #000000;">=</span><span style="color: #000000;"> wres.GetResponseStream();</span><span style="color: #008000;">//</span><span style="color: #008000;">这里得到的流是网页内容</span><span style="color: #008000;">
+</span><span style="color: #008080;"> 93</span><span style="color: #008000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" /></span><span style="color: #000000;">                </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> (stream </span><span style="color: #000000;">==</span><span style="color: #000000;"> </span><span style="color: #0000ff;">null</span><span style="color: #000000;">) </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> </span><span style="color: #000000;">-</span><span style="color: #000000;">1</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 94</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                StreamReader sr </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #0000ff;">new</span><span style="color: #000000;"> StreamReader(stream, Encoding.Default);
+</span><span style="color: #008080;"> 95</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                StringBuilder sb </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #0000ff;">new</span><span style="color: #000000;"> StringBuilder();
+</span><span style="color: #008080;"> 96</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> rl;
+</span><span style="color: #008080;"> 97</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">while</span><span style="color: #000000;"> ((rl </span><span style="color: #000000;">=</span><span style="color: #000000;"> sr.ReadLine()) </span><span style="color: #000000;">!=</span><span style="color: #000000;"> </span><span style="color: #0000ff;">null</span><span style="color: #000000;">)
+</span><span style="color: #008080;"> 98</span><span style="color: #000000;"><img id="Codehighlighter1_2834_2887_Open_Image" onclick="this.style.display='none'; Codehighlighter1_2834_2887_Open_Text.style.display='none'; Codehighlighter1_2834_2887_Closed_Image.style.display='inline'; Codehighlighter1_2834_2887_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_2834_2887_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_2834_2887_Closed_Text.style.display='none'; Codehighlighter1_2834_2887_Open_Image.style.display='inline'; Codehighlighter1_2834_2887_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />                </span><span id="Codehighlighter1_2834_2887_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_2834_2887_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;"> 99</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                    sb.Append(rl);
+</span><span style="color: #008080;">100</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />                }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;">101</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                sss </span><span style="color: #000000;">=</span><span style="color: #000000;"> sb.ToString();
+</span><span style="color: #008080;">102</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                wres.Close();
+</span><span style="color: #008080;">103</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                pReadIe(sss);
+</span><span style="color: #008080;">104</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> </span><span style="color: #000000;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;">105</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />            }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;">106</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />            </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> pReadIe(String sInput)
+</span><span style="color: #008080;">107</span><span style="color: #000000;"><img id="Codehighlighter1_3085_4599_Open_Image" onclick="this.style.display='none'; Codehighlighter1_3085_4599_Open_Text.style.display='none'; Codehighlighter1_3085_4599_Closed_Image.style.display='inline'; Codehighlighter1_3085_4599_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_3085_4599_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_3085_4599_Closed_Text.style.display='none'; Codehighlighter1_3085_4599_Open_Image.style.display='inline'; Codehighlighter1_3085_4599_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />            </span><span id="Codehighlighter1_3085_4599_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_3085_4599_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;">108</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                MatchCollection matches;
+</span><span style="color: #008080;">109</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                Regex[] extractHTML </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #0000ff;">new</span><span style="color: #000000;"> Regex[</span><span style="color: #000000;">5</span><span style="color: #000000;">];
+</span><span style="color: #008080;">110</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                extractHTML[</span><span style="color: #000000;">0</span><span style="color: #000000;">] </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #0000ff;">new</span><span style="color: #000000;"> Regex(</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">&lt;td class=</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">title</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;"> align=</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">center</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">&gt;(?&lt;name&gt;[^/]+)&lt;/td&gt;</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">);
+</span><span style="color: #008080;">111</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                extractHTML[</span><span style="color: #000000;">1</span><span style="color: #000000;">] </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #0000ff;">new</span><span style="color: #000000;"> Regex(</span><span style="color: #000000;">@&#8221;</span><span style="color: #000000;">作者：[s]+(?&lt;name&gt;[S]+)</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">);
+</span><span style="color: #008080;">112</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                extractHTML[</span><span style="color: #000000;">2</span><span style="color: #000000;">] </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #0000ff;">new</span><span style="color: #000000;"> Regex(</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">&lt;td align=</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">center</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;"> class=</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">adddatetime</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">&gt;(?&lt;data&gt;[^ ]+)[s](?&lt;time&gt;[^ ]+)&lt;/td&gt;</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">);
+</span><span style="color: #008080;">113</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                extractHTML[</span><span style="color: #000000;">3</span><span style="color: #000000;">] </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #0000ff;">new</span><span style="color: #000000;"> Regex(</span><span style="color: #000000;">@&#8221;</span><span style="color: #000000;">&amp;nbsp;&amp;nbsp;浏览：[s]+(?&lt;num&gt;[d]+)[s]+次&lt;/td&gt;</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">);
+</span><span style="color: #008080;">114</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                extractHTML[</span><span style="color: #000000;">4</span><span style="color: #000000;">] </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #0000ff;">new</span><span style="color: #000000;"> Regex(</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">&lt;td align=</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">left</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;"> class=</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">content</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">&gt;(?&lt;count&gt;[wW]+)&lt;/td&gt;[s]+&lt;/tr&gt;[s]+&lt;tr&gt;[s]+&lt;td align=</span><span style="color: #000000;">&#8221;</span><span style="color: #000000;">);
+</span><span style="color: #008080;">115</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                </span><span style="color: #0000ff;">for</span><span style="color: #000000;"> (</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> i </span><span style="color: #000000;">=</span><span style="color: #000000;"> </span><span style="color: #000000;">0</span><span style="color: #000000;">; i </span><span style="color: #000000;">&lt;=</span><span style="color: #000000;"> </span><span style="color: #000000;">4</span><span style="color: #000000;">; i</span><span style="color: #000000;">++</span><span style="color: #000000;">)
+</span><span style="color: #008080;">116</span><span style="color: #000000;"><img id="Codehighlighter1_3813_4585_Open_Image" onclick="this.style.display='none'; Codehighlighter1_3813_4585_Open_Text.style.display='none'; Codehighlighter1_3813_4585_Closed_Image.style.display='inline'; Codehighlighter1_3813_4585_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_3813_4585_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_3813_4585_Closed_Text.style.display='none'; Codehighlighter1_3813_4585_Open_Image.style.display='inline'; Codehighlighter1_3813_4585_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />                </span><span id="Codehighlighter1_3813_4585_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_3813_4585_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;">117</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                    matches </span><span style="color: #000000;">=</span><span style="color: #000000;"> extractHTML[i].Matches(sInput);
+</span><span style="color: #008080;">118</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;">119</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                    </span><span style="color: #0000ff;">foreach</span><span style="color: #000000;"> (Match matchMade </span><span style="color: #0000ff;">in</span><span style="color: #000000;"> matches)
+</span><span style="color: #008080;">120</span><span style="color: #000000;"><img id="Codehighlighter1_3955_4567_Open_Image" onclick="this.style.display='none'; Codehighlighter1_3955_4567_Open_Text.style.display='none'; Codehighlighter1_3955_4567_Closed_Image.style.display='inline'; Codehighlighter1_3955_4567_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_3955_4567_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_3955_4567_Closed_Text.style.display='none'; Codehighlighter1_3955_4567_Open_Image.style.display='inline'; Codehighlighter1_3955_4567_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />                    </span><span id="Codehighlighter1_3955_4567_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_3955_4567_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;">121</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;">122</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                        </span><span style="color: #0000ff;">switch</span><span style="color: #000000;"> (i)
+</span><span style="color: #008080;">123</span><span style="color: #000000;"><img id="Codehighlighter1_4017_4544_Open_Image" onclick="this.style.display='none'; Codehighlighter1_4017_4544_Open_Text.style.display='none'; Codehighlighter1_4017_4544_Closed_Image.style.display='inline'; Codehighlighter1_4017_4544_Closed_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_4017_4544_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_4017_4544_Closed_Text.style.display='none'; Codehighlighter1_4017_4544_Open_Image.style.display='inline'; Codehighlighter1_4017_4544_Open_Text.style.display='inline';" alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top" />                        </span><span id="Codehighlighter1_4017_4544_Closed_Text" style="display: none; background-color: #ffffff; border: #808080 1px solid;"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_4017_4544_Open_Text"><span style="color: #000000;">{
+</span><span style="color: #008080;">124</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                            </span><span style="color: #0000ff;">case</span><span style="color: #000000;"> </span><span style="color: #000000;">0</span><span style="color: #000000;">: text[</span><span style="color: #000000;">0</span><span style="color: #000000;">] </span><span style="color: #000000;">=</span><span style="color: #000000;"> matchMade.Groups[</span><span style="color: #000000;">1</span><span style="color: #000000;">].Value; </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+</span><span style="color: #008080;">125</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                            </span><span style="color: #0000ff;">case</span><span style="color: #000000;"> </span><span style="color: #000000;">1</span><span style="color: #000000;">: text[</span><span style="color: #000000;">1</span><span style="color: #000000;">] </span><span style="color: #000000;">=</span><span style="color: #000000;"> matchMade.Groups[</span><span style="color: #000000;">1</span><span style="color: #000000;">].Value; </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+</span><span style="color: #008080;">126</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                            </span><span style="color: #0000ff;">case</span><span style="color: #000000;"> </span><span style="color: #000000;">2</span><span style="color: #000000;">: text[</span><span style="color: #000000;">2</span><span style="color: #000000;">] </span><span style="color: #000000;">=</span><span style="color: #000000;"> matchMade.Groups[</span><span style="color: #000000;">1</span><span style="color: #000000;">].Value;
+</span><span style="color: #008080;">127</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                                text[</span><span style="color: #000000;">3</span><span style="color: #000000;">] </span><span style="color: #000000;">=</span><span style="color: #000000;"> matchMade.Groups[</span><span style="color: #000000;">2</span><span style="color: #000000;">].Value;
+</span><span style="color: #008080;">128</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                                </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+</span><span style="color: #008080;">129</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                            </span><span style="color: #0000ff;">case</span><span style="color: #000000;"> </span><span style="color: #000000;">3</span><span style="color: #000000;">: text[</span><span style="color: #000000;">4</span><span style="color: #000000;">] </span><span style="color: #000000;">=</span><span style="color: #000000;"> matchMade.Groups[</span><span style="color: #000000;">1</span><span style="color: #000000;">].Value; </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+</span><span style="color: #008080;">130</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />                            </span><span style="color: #0000ff;">case</span><span style="color: #000000;"> </span><span style="color: #000000;">4</span><span style="color: #000000;">: text[</span><span style="color: #000000;">5</span><span style="color: #000000;">] </span><span style="color: #000000;">=</span><span style="color: #000000;"> matchMade.Groups[</span><span style="color: #000000;">1</span><span style="color: #000000;">].Value; </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+</span><span style="color: #008080;">131</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />                        }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;">132</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;">133</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />                    }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;">134</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />                }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;">135</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />            }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;">136</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />        }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;">137</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;">138</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/InBlock.gif" align="top" />
+</span><span style="color: #008080;">139</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />    }</span></span><span style="color: #000000;">
+</span><span style="color: #008080;">140</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/ExpandedBlockEnd.gif" align="top" />}</span></span><span style="color: #000000;">
+</span><span style="color: #008080;">141</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" />
+</span><span style="color: #008080;">142</span><span style="color: #000000;"><img alt="" src="http://www.cnblogs.com/Images/OutliningIndicators/None.gif" align="top" /> </span></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/10/10/ineffable-shopping-guide/">Ineffable Shopping Guide 介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/10/10/childsearch-2010/">Childsearch&#8212;-2010腾讯校园之星作品</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/28/ineffable-shopping-guide-2/">Ineffable Shopping Guide 结构化搜索技术介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/03/23/python-pcap/">利用Python来解析Pcap包</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/02/16/gdb-study/">GDB学习笔记</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

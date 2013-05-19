@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Projects | My Octopress Blog]]></title>
+  <link href="http://bohr.github.io/blog/categories/projects/atom.xml" rel="self"/>
+  <link href="http://bohr.github.io/"/>
+  <updated>2013-05-19T07:07:47+00:00</updated>
+  <id>http://bohr.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ineffable Shopping Guide 介绍]]></title>
+    <link href="http://bohr.github.io/blog/2011/10/10/ineffable-shopping-guide/"/>
+    <updated>2011-10-10T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2011/10/10/ineffable-shopping-guide</id>
+    <content type="html"><![CDATA[<p>Ineffable Shopping Guide 是我们参加微软校园菁英计划之“有求必应”结构化数据搜索是想到的。主要目的还是因为面对那些琳琅满目的商品你是否觉得无从下手，买各种数码产品首先都是到处找该产品的评论信息。我们就准备将这些产品的评论信息进行整合起来，这样就极大的方便了用户，既给了用户想知道的信息，又为用户提供了没有考虑到的信息。下面是我们作品展示的海报。在线Demo展示：<a href="http://shopping.daijun.info">http://shopping.daijun.info</a></p>
+
+
+
+
+<p><a href="http://yanggang.me/images/daijun/wp-content/uploads/2011/10/large_V5I0_503900007a9412601.jpg"><img class="alignnone size-full wp-image-7048" alt="large_V5I0_503900007a941260" src="http://yanggang.me/images/daijun/wp-content/uploads/2011/10/large_V5I0_503900007a9412601.jpg" width="709" height="720" /></a></p>
+
+
+
+
+<p><strong>在线视频：</strong></p>
+
+
+
+
+<p><object width="480" height="400" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" align="middle"><param name="src" value="http://player.youku.com/player.php/sid/XMjg4MTgxNzM2/v.swf" /><param name="allowfullscreen" value="true" /><param name="quality" value="high" /><param name="allowscriptaccess" value="always" /><embed width="480" height="400" type="application/x-shockwave-flash" src="http://player.youku.com/player.php/sid/XMjg4MTgxNzM2/v.swf" allowfullscreen="true" quality="high" allowscriptaccess="always" align="middle" /></object></p>
+
+
+
+
+<p><strong>技术说明</strong>
+<div id="__ss_9627040" style="width: 425px;"><strong style="margin: 12px 0px 4px; display: block;"><a title="Ineffable Shopping Guide 结构化搜索" href="http://www.slideshare.net/dj3141592653/ineffable-shopping-guide" target="_blank">Ineffable Shopping Guide 结构化搜索</a></strong> <object id="__sse9627040" width="425" height="355" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="src" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=random-111010040424-phpapp01&amp;stripped_title=ineffable-shopping-guide&amp;userName=dj3141592653" /><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><embed id="__sse9627040" width="425" height="355" type="application/x-shockwave-flash" src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=random-111010040424-phpapp01&amp;stripped_title=ineffable-shopping-guide&amp;userName=dj3141592653" allowfullscreen="true" allowscriptaccess="always" /><img src="http://yanggang.me/images/daijun/wp-includes/js/tinymce/themes/advanced/img/trans.gif" class="mceItemMedia mceItemFlash" width="425" height="355" data-mce-json="{'video':{},'params':{'src':'http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=random-111010040424-phpapp01&amp;stripped_title=ineffable-shopping-guide&amp;userName=dj3141592653','allowscriptaccess':'always','allowfullscreen':'true'},'hspace':null,'vspace':null,'align':null,'bgcolor':null}" alt="" /></object></div></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Childsearch----2010腾讯校园之星作品]]></title>
+    <link href="http://bohr.github.io/blog/2011/10/10/childsearch-2010/"/>
+    <updated>2011-10-10T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2011/10/10/childsearch-2010</id>
+    <content type="html"><![CDATA[<p><ul>
+    <li>专为儿童开发的搜索引擎，主要功能有：</li>
+    <li>拼音搜索功能</li>
+    <li>自动对输入关键字分类</li>
+    <li>智能匹配电影、游戏</li>
+    <li>游戏可以自动播放</li>
+</ul>
+<h5><a href="http://labs.soso.com/cstar2011/xqtop.html#project_id=9476">作品展示</a></h5>
+<h5><a href="http://113.105.93.45:8000/">在线运行</a></h5>
+<img alt="" src="http://wiki.daijun.info/images/childsearch.png" width="750" /></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ineffable Shopping Guide 结构化搜索技术介绍]]></title>
+    <link href="http://bohr.github.io/blog/2011/07/28/ineffable-shopping-guide-2/"/>
+    <updated>2011-07-28T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2011/07/28/ineffable-shopping-guide-2</id>
+    <content type="html"><![CDATA[<p><div id="__ss_9627040" style="width: 425px;"><strong style="margin: 12px 0px 4px; display: block;"><a title="Ineffable Shopping Guide 结构化搜索" href="http://www.slideshare.net/dj3141592653/ineffable-shopping-guide">Ineffable Shopping Guide 结构化搜索</a></strong><object id="__sse9627040" width="425" height="355" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="src" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=random-111010040424-phpapp01&amp;stripped_title=ineffable-shopping-guide&amp;userName=dj3141592653" /><param name="allowscriptaccess" value="always" /><param name="allowfullscreen" value="true" /><embed id="__sse9627040" width="425" height="355" type="application/x-shockwave-flash" src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=random-111010040424-phpapp01&amp;stripped_title=ineffable-shopping-guide&amp;userName=dj3141592653" allowfullscreen="true" allowscriptaccess="always" /></object>
+<div style="padding-bottom: 12px; padding-left: 0px; padding-right: 0px; padding-top: 5px;">View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/dj3141592653">dj3141592653</a>.</div>
+</div>
+介绍说明：<a href="http://daijun.info/?p=7041">http://daijun.info/?p=7041</a></p>
+
+
+
+
+<p>主要技术：爬虫（Python）+分词（盘古分词）+ Lucene.Net</p>
+
+
+
+
+<p>爬虫代码：<a href="https://github.com/xddaijun/Shopping-Guide">https://github.com/xddaijun/Shopping-Guide</a></p>
+
+]]></content>
+  </entry>
+  
+</feed>

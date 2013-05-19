@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 编程 | My Octopress Blog]]></title>
+  <link href="http://bohr.github.io/blog/categories/bian-cheng/atom.xml" rel="self"/>
+  <link href="http://bohr.github.io/"/>
+  <updated>2013-05-19T07:07:47+00:00</updated>
+  <id>http://bohr.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[利用Python来解析Pcap包]]></title>
+    <link href="http://bohr.github.io/blog/2011/03/23/python-pcap/"/>
+    <updated>2011-03-23T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2011/03/23/python-pcap</id>
+    <content type="html"><![CDATA[<p>Tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。</p>
+
+
+
+
+<p><a href="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/3.png"><img class="alignnone size-full wp-image-7061" alt="3" src="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/3.png" width="620" height="279" /></a></p>
+
+
+
+
+<p>这个我在截取的一段Tcpdump的数据包。通常可以采用wireshark来对Tcpdump数据包进行分析。</p>
+
+
+
+
+<p><a href="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/1.png"><img class="alignnone size-full wp-image-7059" alt="1" src="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/1.png" width="640" height="263" /></a></p>
+
+
+
+
+<p><a href="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/3.png"><img class="alignnone size-full wp-image-7061" alt="3" src="http://yanggang.me/images/daijun/wp-content/uploads/2011/03/3.png" width="620" height="279" /></a></p>
+
+
+
+
+<p>从图中大概可以看出每一个tcpdump的数据里面有很多的包，每一个包都有包的head部分和Data部分。其中head部分包括网卡的地址，ip的地址，端口地址，发送时间等等很多信息。在我的工作中需要将包的发送时间、它的目的IP以及发送的数据保存起来。这就需要对tcpdump数据进行分析，提取出有用的信息。</p>
+
+
+
+
+<p>在网上有一个C#版本做的解析Pcap数据包的资料，很有参考价值。<a href="http://www.cnblogs.com/zealic/archive/2008/05/04/1182420.html">读写 cap 文件的 C# 代码（兼容 tcpdump 及 Wireshark）</a></p>
+
+
+
+
+<p>它的关键代码
+<pre class="code"><span style="color: blue;">#region </span>Constructors
+      <span style="color: gray;">/// &lt;summary&gt;
+      /// </span><span style="color: green;">构造一个 Pcap 包捕获读取器。
+      </span><span style="color: gray;">/// &lt;/summary&gt;
+      /// &lt;param name="baseStream"&gt;</span><span style="color: green;">要读取的基础流</span><span style="color: gray;">&lt;/param&gt;
+      </span><span style="color: blue;">public </span>PacketCaptureReader(<span style="color: teal;">Stream </span>baseStream)
+      {
+          <span style="color: blue;">if </span>(baseStream == <span style="color: blue;">null</span>)</pre>
+<pre class="code"><span style="color: blue;">throw new </span><span style="color: teal;">ArgumentNullException</span>(<span style="color: maroon;">"baseStream"</span>);
+          <span style="color: blue;">if </span>(!baseStream.CanRead)</pre>
+<pre class="code"><span style="color: blue;">throw new </span><span style="color: teal;">ArgumentException</span>(<span style="color: maroon;">"传入的流必须为可读。"</span>, <span style="color: maroon;">"baseStream"</span>);
+          _BaseStream = baseStream;
+          m_Reader = <span style="color: blue;">new </span><span style="color: teal;">BinaryReader</span>(_BaseStream);
+          <span style="color: blue;">if </span>(m_Reader.ReadUInt32() != MAGIC)
+              <span style="color: blue;">throw new </span><span style="color: teal;">FormatException</span>(<span style="color: maroon;">"无效的 PCAP 格式。"</span>);
+          <span style="color: blue;">short </span>versionMajor = m_Reader.ReadInt16();
+          <span style="color: blue;">short </span>versionMinjor = m_Reader.ReadInt16();
+          <span style="color: blue;">if </span>(versionMajor != 2 || VersionMinjor != 4)
+          {
+              <span style="color: blue;">throw new </span><span style="color: teal;">FormatException</span>(</pre>
+<blockquote>
+<pre class="code"><span style="color: blue;">string</span>.Format(<span style="color: maroon;">"无法处理的 PCAP 版本 {0}.{1}"</span>, versionMajor, versionMinjor));
+          }
+          _TimeZone = m_Reader.ReadInt32();
+          _CaptureTimestamp = m_Reader.ReadInt32();
+          _MaxPacketLength = m_Reader.ReadInt32();
+          _LinkLayerType = (<span style="color: teal;">LinkLayerType</span>)m_Reader.ReadInt32();
+      }</pre></blockquote></p>
+
+
+
+
+<p>      <span style="color: blue;">#endregion</span></p>
+
+
+
+
+<p>      <span style="color: gray;">/// &lt;summary&gt;<br />
+      /// </span><span style="color: green;">读取下一个捕获包<br />
+      </span><span style="color: gray;">/// &lt;/summary&gt;<br />
+      /// &lt;returns&gt;</span><span style="color: green;">读取的捕获包，如果已经到达尾端，返回 null</span><span style="color: gray;">&lt;/returns&gt;<br />
+      </span><span style="color: blue;">public </span><span style="color: teal;">PacketCapture </span>Read()<br />
+      {<br />
+          <span style="color: blue;">if </span>(_BaseStream.Position == _BaseStream.Length) <span style="color: blue;">return null</span>;<br />
+          <span style="color: teal;">UnixTime </span>timestamp = <span style="color: blue;">new </span><span style="color: teal;">UnixTime</span>(m_Reader.ReadInt32());<br />
+          <span style="color: blue;">int </span>millseconds = m_Reader.ReadInt32();<br />
+          <span style="color: blue;">if </span>(millseconds &gt; 1000000)<br />
+              <span style="color: blue;">throw new </span><span style="color: teal;">InvalidDataException</span>(<span style="color: maroon;">"读取到无效的数据格式。"</span>);<br />
+          <span style="color: blue;">int </span>len = m_Reader.ReadInt32();<br />
+          <span style="color: blue;">int </span>rawLen = m_Reader.ReadInt32();<br />
+          <span style="color: blue;">if </span>(len &gt; rawLen)<br />
+              <span style="color: blue;">throw new </span><span style="color: teal;">InvalidDataException</span>(<span style="color: maroon;">"读取到无效的数据格式。"</span>);<br />
+          <span style="color: blue;">byte</span>[] buff = m_Reader.ReadBytes(len);<br />
+          <span style="color: blue;">return new </span><span style="color: teal;">PacketCapture</span>(buff, rawLen, timestamp, millseconds);<br />
+      }
+
+从中可以看出 每一个tcpdump数据里面都有一个数据格式的head信息，通过读取该部分判断这个数据包的格式。剩下的部分就是我需要的数据包内容了。</p>
+
+
+
+
+<p>我的python代码如下
+<div id="codeSnippetWrapper" style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 20px 0px 10px; width: 97.5%; font-family: 'Courier New', courier, monospace; direction: ltr; max-height: 200px; font-size: 8pt; overflow: auto; cursor: text; border: silver 1px solid; padding: 4px;">
+<div id="codeSnippet" style="text-align: left; line-height: 12pt; background-color: #f4f4f4; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;">
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum1" style="color: #606060;">   1:</span> <span style="color: #008000;">#!/usr/bin/python2.5</span></pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum2" style="color: #606060;">   2:</span> <span style="color: #008000;"># -*- coding: utf-8 -*-#</span></pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum3" style="color: #606060;">   3:</span> import struct</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum4" style="color: #606060;">   4:</span> import os</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum5" style="color: #606060;">   5:</span> import re</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum6" style="color: #606060;">   6:</span> import sys</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum7" style="color: #606060;">   7:</span> import time</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum8" style="color: #606060;">   8:</span> import socket</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum9" style="color: #606060;">   9:</span> def Pcap_check(infile):</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum10" style="color: #606060;">  10:</span>     c = infile.read(24)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum11" style="color: #606060;">  11:</span>     <span style="color: #0000ff;">if</span> not c:</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum12" style="color: #606060;">  12:</span>         <span style="color: #0000ff;">return</span> c</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum13" style="color: #606060;">  13:</span>     (a,b,cx,d,e,f,g)=struct.unpack(<span style="color: #006080;">'&lt;Ihhiiii'</span>,c)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum14" style="color: #606060;">  14:</span>     <span style="color: #0000ff;">if</span> a!= 0xA1B2C3D4:</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum15" style="color: #606060;">  15:</span>         <span style="color: #0000ff;">return</span> False</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum16" style="color: #606060;">  16:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"versionMajor:"</span>,b</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum17" style="color: #606060;">  17:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"VersionMinjor:"</span>,cx</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum18" style="color: #606060;">  18:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"_TimeZone:"</span>,d</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum19" style="color: #606060;">  19:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"_CaptureTimestamp"</span>,e</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum20" style="color: #606060;">  20:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"_MaxPacketLength:"</span>,f</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum21" style="color: #606060;">  21:</span>     <span style="color: #0000ff;">print</span> <span style="color: #006080;">"_LinkLayerType:"</span>,g</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum22" style="color: #606060;">  22:</span>     <span style="color: #0000ff;">return</span> True</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum23" style="color: #606060;">  23:</span> def Pcap_read(infile):</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum24" style="color: #606060;">  24:</span>     c = infile.read(16)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum25" style="color: #606060;">  25:</span>     <span style="color: #0000ff;">if</span> not c:</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum26" style="color: #606060;">  26:</span>         <span style="color: #0000ff;">return</span> (<span style="color: #006080;">''</span>,0,c)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum27" style="color: #606060;">  27:</span>     (timestamp,millseconds,len,rawlen)=struct.unpack(<span style="color: #006080;">'&lt;IIII'</span>,c)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum28" style="color: #606060;">  28:</span>     timeStruct=time.gmtime(timestamp)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum29" style="color: #606060;">  29:</span>     currentTime=(timeStruct.tm_hour*3600+timeStruct.tm_min*60+</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum30" style="color: #606060;">  30:</span>                 timeStruct.tm_sec)*1000+millseconds/1000</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum31" style="color: #606060;">  31:</span>     c=infile.read(34)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum32" style="color: #606060;">  32:</span>     source,dest=struct.unpack(<span style="color: #006080;">'&lt;26xII'</span>,c)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum33" style="color: #606060;">  33:</span>     source=socket.inet_ntoa(c[26:30])</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum34" style="color: #606060;">  34:</span>     dest=socket.inet_ntoa(c[30:])</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum35" style="color: #606060;">  35:</span>     infile.read(8)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: #f4f4f4; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum36" style="color: #606060;">  36:</span>     c=infile.read(len-8-34)</pre>
+<!--CRLF-->
+<pre style="text-align: left; line-height: 12pt; background-color: white; margin: 0em; width: 100%; font-family: 'Courier New', courier, monospace; direction: ltr; color: black; font-size: 8pt; overflow: visible; border-style: none; padding: 0px;"><span id="lnum37" style="color: #606060;">  37:</span>     <span style="color: #0000ff;">return</span> (dest,currentTime,c)</pre>
+<!--CRLF--></div></div></p>
+
+
+
+
+<p>
+
+参考资料：<a href="http://www.cnblogs.com/zealic/archive/2008/05/04/1182420.html">读写 cap 文件的 C# 代码（兼容 tcpdump 及 Wireshark）</a><a title="http://www.cnblogs.com/zealic/archive/2008/05/04/1182420.html" href="http://www.cnblogs.com/zealic/archive/2008/05/04/1182420.html">http://www.cnblogs.com/zealic/archive/2008/05/04/1182420.html</a></p>
+
+
+
+
+<p>tcpdump+python编写的流量监控的脚本 <a title="http://blog.csdn.net/kobeyan/archive/2009/07/13/4344192.aspx" href="http://blog.csdn.net/kobeyan/archive/2009/07/13/4344192.aspx">http://blog.csdn.net/kobeyan/archive/2009/07/13/4344192.aspx</a></p>
+
+
+
+
+<p>dpkt下载地址：<a href="http://code.google.com/p/dpkt/downloads/list">http://code.google.com/p/dpkt/downloads/list</a></p>
+
+
+
+
+<p>pcap下载地址：<a title="http://code.google.com/p/pypcap/" href="http://code.google.com/p/pypcap/">http://code.google.com/p/pypcap/</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[很好的几个Cheat Sheet]]></title>
+    <link href="http://bohr.github.io/blog/2010/10/19/cheat-sheet/"/>
+    <updated>2010-10-19T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2010/10/19/cheat-sheet</id>
+    <content type="html"><![CDATA[<p>一个很偶然的机会，发现还有人制作好的python的快速手册，相当精美。</p>
+
+
+
+
+<p><a href="http://yanggang.me/images/daijun/wp-content/uploads/2010/10/6.png"><img class="alignnone size-full wp-image-7074" alt="6" src="http://yanggang.me/images/daijun/wp-content/uploads/2010/10/6.png" width="353" height="480" /></a></p>
+
+
+
+
+<p>看上图，这里还有很多 python、<a href="http://www.addedbytes.com/cheat-sheets/regular-expressions-cheat-sheet/">Regular Expressions</a> 等等。</p>
+
+
+
+
+<p>网址是<a title="http://www.addedbytes.com/cheat-sheets/" href="http://www.addedbytes.com/cheat-sheets/">http://www.addedbytes.com/cheat-sheets/</a>，他主要侧重于web开发</p>
+
+
+
+
+<p>在搜索后还发现了一个，主要侧重于网络的。<a title="http://packetlife.net/library/cheat-sheets/" href="http://packetlife.net/library/cheat-sheets/">http://packetlife.net/library/cheat-sheets/</a></p>
+
+
+
+
+<p>此外还有几个哲思软件社区做的几个学习笔记，也可以参考一下。</p>
+
+
+
+
+<p><a href="http://amosk.info/pub/doc/learning-mysql.cn.html">Learning Mysql</a>
+<a href="http://amosk.info/pub/doc/learning-git.cn.html">Learning Git</a>
+<a href="http://amosk.info/pub/doc/learning-apache.cn.html">Learning Apache</a></p>
+
+
+
+
+<p>from <a title="http://amosk.info/program.html" href="http://amosk.info/program.html">http://amosk.info/program.html</a></p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p><a href="http://wangcong.org/articles/learning-gcc.cn.html">Learning gcc</a> (in Chinese)
+<a href="http://wangcong.org/articles/learning-gdb.cn.html">Learning gdb</a> (in Chinese)
+<a href="http://wangcong.org/articles/learning-iptables.cn.html">Learning iptables</a> (in Chinese)</p>
+
+
+
+
+<p>from <a title="http://wangcong.org/articles/index.html" href="http://wangcong.org/articles/index.html">http://wangcong.org/articles/index.html</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用Physics Helper 做SilverLight小游戏]]></title>
+    <link href="http://bohr.github.io/blog/2010/04/22/physics-helper-silverlight/"/>
+    <updated>2010-04-22T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2010/04/22/physics-helper-silverlight</id>
+    <content type="html"><![CDATA[<p>最近在做一个Silverlight的游戏，由于人物上面的关节需要进行活动，类似于在flash用骨骼工具，在SilverLight中没有类似的控件，找了很多东西都感觉实现得很不理想。后来发现了 codeproject上面的一个<a href="http://physicshelper.codeplex.com/">Physics Helper</a>的开源项目，它封装了Farseer的功能，并且它的使用方法非常简单，直接在Blend中就可以实现很好的动画效果，支持鼠标，重力等。下面是他的描述。
+<h3>Project Description</h3>
+The Physics Helper for Blend, Silverlight and WPF contains several Behaviors and controls which allow you to draw objects in Expression Blend 3, and have those objects translated directly into Physics objects using the <a href="http://www.codeplex.com/farseerphysics">Farseer Physics Engine</a>. This can be a great timesaver for creating games, as it is traditionally difficult to line up underlying physics bodies and geometries with your Blend artwork.</p>
+
+
+
+
+<p>demo演示地址    <a href="http://www.andybeaulieu.com/silverlight/3.0/physicshelper3/index.htm">http://www.andybeaulieu.com/silverlight/3.0/physicshelper3/index.htm</a>.</p>
+
+
+
+
+<p><a href="http://www.andybeaulieu.com/silverlight/3.0/physicshelper3/DemoBehaviors2TestPage.html"><img alt="Demo Behaviors 2" src="http://yanggang.me/images/daijun/wp-content/uploads/2013/05/demo4.png" border="0" /></a></p>
+
+
+
+
+<p>Rag Doll</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[用LINQ来对文章列表进行操作]]></title>
+    <link href="http://bohr.github.io/blog/2010/04/04/linq/"/>
+    <updated>2010-04-04T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2010/04/04/linq</id>
+    <content type="html"><![CDATA[<p>最近正在做的一个软件，就是对某个网站的所有文章列表里添加一个监听器，判断是否有指定的关键字。对文章列表里面的抓取都已经做好了，就需要对一前一后的两个列表进行更新。本来可以用循环列表一个一个的进行判别的，一想在VS2008里面不是有个LINQ啊，一直只是听说过，从来没用过。今天试看看怎么用。就上网搜了会，照着别人的写了个。感觉效率不好，应该可以写成一个语句了，我去写成了三个，也不知道怎么改好。</p>
+
+
+
+
+<p>&nbsp;
+<pre class="brush:csharp"> public bool getState(ref List&lt;Post&gt; ls)
+      {
+          second = getData();
+          var list2 = from s in first
+                      where s.Title.IndexOf( key ) &gt;= 0
+                      select s.getPostUid();
+          first[4].getPostUid();
+          var list3 = second.Where(s =&gt; s.Title.IndexOf( key) &gt;= 0);
+          var l =from s in list3
+              where !list2.Contains(s.getPostUid())
+               select s;
+          first = second;
+          if (l.Count() &gt;= 1)
+          {
+              ls = l.ToList();
+              return true;
+          }
+          else
+              return false;
+      }</pre></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[复试上机题]]></title>
+    <link href="http://bohr.github.io/blog/2009/03/15/computer/"/>
+    <updated>2009-03-15T00:00:00+00:00</updated>
+    <id>http://bohr.github.io/blog/2009/03/15/computer</id>
+    <content type="html"><![CDATA[<p><div class="t_msgfont" id="postmessage_54785">Problems A.请写一个程序，判断给定整数序列能否构成等差数列<br />
+输入说明：多组数据，每组输入数据由两行构成，第一行只有一个整数n（&lt;1000），表示序列长度（即序列中整数的个数，0表示输入结束），第二行为n个整数，每个整数的取值区间都为[-32768----32767]，整数之间以空格或挑格间隔。<br />
+输出说明：对于每一组数据，输出一个yes或no，表示该序列能否构成等差数列。<br />
+输入样本：<br />
+6
+23 15 4 18 35 11<br />
+3
+3 1 2<br />
+0
+输出样本：<br />
+yes<br />
+noProblem B.判断给定正整数是不是“水仙花数”。“水仙花数”是指一个三位数，其各位数字的立方和等于该数，例如153=13+53+33。<br />
+输入说明：有多组数据，每组数据为一个正整数n（0&lt;n&lt;65536，占一行），为0时表示输入结束。<br />
+输出说明：对于每一组数据，输出一个yes或no（表示该数是否为“水仙花数”）。<br />
+输入样本：<br />
+153<br />
+111<br />
+370<br />
+422<br />
+0
+输出样本：<br />
+yes<br />
+no<br />
+yes<br />
+noProblem C. Arnold变换是一种常用的图像置乱技术，Arnold变换的定义如下：<br />
+对任意N*N矩阵（所有元素都相同的矩阵除外），设i，j为矩阵元素原始下标，经过Arnold变换后新下标为i'，j'，且满足下式：<br />
+i'=(i+j)mod N<br />
+j'=(i+2j)mod N<br />
+i,j:0,1,.........N-1<br />
+Arnold变换具有周期性，即经过若干次变换后，矩阵回到最初状态，且周期T与N的大小有关。对于任意N&gt;2，TN&lt;=N2/2，请编写程序输出给定的N（2&lt;N&lt;=10）对应的周期TN。<br />
+输入说明：有多组数据，每组数据只有一个整数N（2&lt;N&lt;=10，占一行），为0时表示输入结束。<br />
+输出说明：对输入的每一N，给出N*N矩阵的Arnold变换的周期T。<br />
+输入样本：<br />
+3
+8<br />
+0
+输出样本：<br />
+4
+6</div></p>
+
+
+
+
+<p>Problem D.对于一个正整数n，如果它的各位之和等于它的所有质因数的各位之和，则该数被称为Smith数。例如，31257=3*3*23*151，31257的各位数字之和为3+1+2+5+7=18，它的所有质因数的各位数字之和为3+3+2+3+1+5+1=18，因此，31257是一个Smith数。编写一个程序判断输入的正整数是不是Smith数。<br />
+输入说明：有多组数据，每组数据只有一个整数n（&lt;100000，占一行），为0时表示输入结束。<br />
+输出说明：对于每一组数据，输出一个yes或no（表示该数是否为Smith数）。<br />
+输入样本：<br />
+31257<br />
+123<br />
+0
+输出样本：<br />
+yes<br />
+no</p>
+
+
+
+
+<p>Problem E. 请写一个程序，计算Rn精确结果（0.0&lt;R&lt;99.999,n是整数且0&lt;n&lt;=25)。<br />
+输入说明：有多组数据，每组数据占一行，用一对数据表示，第一个数据是R（含小数点共6位），第二个数据是n，两个数之间有一个空格。<br />
+输出说明：对每个输入输出其结果（占一行）<br />
+输入样本：<br />
+95.123   12<br />
+0.4321   20<br />
+6.7592   9<br />
+98.999   10<br />
+1.0100   12<br />
+输出样本：<br />
+548815620517731830194541.899025343415715973535967221869852721<br />
+.00000005148554641076956121994511276767154838481760200726351203835429763013462401<br />
+29448126.764121021618164430206909037173276672<br />
+90429072743629540498.107596019456651774561044010001<br />
+1.126825030131969720661201</p>
+
+
+
+
+<p></p>
+
+]]></content>
+  </entry>
+  
+</feed>

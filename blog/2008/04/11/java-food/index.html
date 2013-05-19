@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>宋建邦之java售饭机之有限状态机 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="// TODO 自动生成方法存根
+if (!bInsert)
+return;
+if(sum+temp*100 &gt; 100000)
+return;
+String command = e.getActionCommand();
+System.out.println(command); &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://bohr.github.io/blog/2008/04/11/java-food">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:bohr.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">宋建邦之java售饭机之有限状态机</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-11T00:00:00+00:00" pubdate data-updated="true">Apr 11<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><pre class="csharpcode"><span class="rem">// TODO 自动生成方法存根</span>
+<span class="kwrd">if</span> (!bInsert)
+<span class="kwrd">return</span>;
+<span class="kwrd">if</span>(sum+temp*100 &gt; 100000)
+<span class="kwrd">return</span>;
+String command = e.getActionCommand();
+System.<span class="kwrd">out</span>.println(command);
+<span class="kwrd">switch</span> (status) {
+<span class="kwrd">case</span> S_INIT:
+<span class="kwrd">case</span> S_ADD:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+temp = temp * 10 + Integer.parseInt(command);
+<span class="kwrd">break</span>;
+}
+sum += temp*100;
+temp = 0;
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+status = S_SUB;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"."</span>) {
+dec = <span class="str">"0."</span>;
+status = S_ADD_POINT;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">case</span> S_SUB:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+temp = temp * 10 - Integer.parseInt(command);
+<span class="kwrd">break</span>;
+}
+sum += temp*100;
+temp = 0;
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+status = S_ADD;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"."</span>) {
+dec = <span class="str">"-0."</span>;
+status = S_SUB_POINT;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">case</span> S_ADD_POINT:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+<span class="kwrd">if</span>(dec.length() &gt;= 4)
+<span class="kwrd">break</span>;
+dec += command;
+<span class="kwrd">break</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_ADD;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_SUB;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">break</span>;
+<span class="kwrd">case</span> S_SUB_POINT:
+<span class="kwrd">if</span> (command.charAt(0) &gt;= <span class="str">'0'</span> &amp;&amp; command.charAt(0) &lt;= <span class="str">'9'</span>) {
+<span class="kwrd">if</span>(dec.length() &gt;= 5)
+<span class="kwrd">break</span>;
+dec += command;
+<span class="kwrd">break</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"+"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_ADD;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">if</span> (command == <span class="str">"-"</span>) {
+String str = String.valueOf((Double.parseDouble(dec)*100));
+sum += Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>)));
+dec = <span class="kwrd">null</span>;
+status = S_SUB;
+<span class="kwrd">return</span>;
+}
+<span class="kwrd">break</span>;
+}
+<span class="kwrd">int</span> t = 0;
+<span class="kwrd">if</span> (dec != <span class="kwrd">null</span>){
+String str = String.valueOf((Double.parseDouble(dec)*100));
+t = (sum + temp *100+Integer.parseInt(str.substring(0, str.lastIndexOf(<span class="str">'.'</span>))));
+<span class="kwrd">if</span>(balance - t &lt; 0||t&lt;0){
+JOptionPane.showMessageDialog(<span class="kwrd">this</span>, <span class="str">"余额不足!"</span>);
+reset();
+sCurrent.display(0);
+sBalance.display(balance);
+<span class="kwrd">return</span>;
+}
+sCurrent.display(t);
+sBalance.display(balance - t);
+}
+<span class="kwrd">else</span>{
+t = sum + temp * 100;
+<span class="kwrd">if</span>(balance - t &lt; 0 || t&lt;0){
+JOptionPane.showMessageDialog(<span class="kwrd">this</span>, <span class="str">"余额不足!"</span>);
+reset();
+sCurrent.display(0);
+sBalance.display(balance);
+<span class="kwrd">return</span>;
+}
+sCurrent.display(t);
+sBalance.display(balance - t);
+}</pre>
+<style type="text/css"><!--<br>
+.csharpcode, .csharpcode pre<br>
+{
+font-size: small;<br>
+color: black;<br>
+font-family: consolas, &#8220;Courier New&#8221;, courier, monospace;<br>
+background-color: #ffffff;<br>
+/*white-space: pre;*/<br>
+}
+.csharpcode pre { margin: 0em; }<br>
+.csharpcode .rem { color: #008000; }<br>
+.csharpcode .kwrd { color: #0000ff; }<br>
+.csharpcode .str { color: #006080; }<br>
+.csharpcode .op { color: #0000c0; }<br>
+.csharpcode .preproc { color: #cc6633; }<br>
+.csharpcode .asp { background-color: #ffff00; }<br>
+.csharpcode .html { color: #800000; }<br>
+.csharpcode .attr { color: #ff0000; }<br>
+.csharpcode .alt<br>
+{
+background-color: #f4f4f4;<br>
+width: 100%;<br>
+margin: 0em;<br>
+}
+.csharpcode .lnum { color: #606060; }<br>
+&#8211;></style></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-11T00:00:00+00:00" pubdate data-updated="true">Apr 11<span>th</span>, 2008</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/suan-fa/'>算法</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://bohr.github.io/blog/2008/04/11/java-food/" data-via="" data-counturl="http://bohr.github.io/blog/2008/04/11/java-food/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2008/04/08/c-winform/" title="Previous Post: C# 的winform中使用数据库连接字符串">&laquo; C# 的winform中使用数据库连接字符串</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2008/04/14/4_14-asp-net/" title="Next Post: 4_14 ASP.NET学习总结">4_14 ASP.NET学习总结 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/10/10/ineffable-shopping-guide/">Ineffable Shopping Guide 介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/10/10/childsearch-2010/">Childsearch----2010腾讯校园之星作品</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/28/ineffable-shopping-guide-2/">Ineffable Shopping Guide 结构化搜索技术介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/03/23/python-pcap/">利用Python来解析Pcap包</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/02/16/gdb-study/">GDB学习笔记</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
